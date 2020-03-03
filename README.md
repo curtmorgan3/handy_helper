@@ -27,7 +27,7 @@ You should see a prompt to submit a PR on the recently pushed remote branch. Cli
 
 ![screen](https://github.com/curtmorgan3/handy_helper/blob/master/readme_images/pr_screen.png)
 
-Fill out some relevant details about the branch, including any parameters needed to test functionality, then click 'Submit PR'
+Fill out some relevant details about the branch, including any parameters needed to test functionality, then click 'Create Pull Request'
 
 All PRs will be reviewed by `curtmorgan3` before being merged. 
 
