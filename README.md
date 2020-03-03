@@ -19,6 +19,6 @@ You only need to set the upstream the first push. After that, running `git push`
 
 When the feature is complete and ready to be merged into the master branch, submit a Pull Request on GitHub. Navigate to https://github.com/curtmorgan3/handy_helper 
 
-[button](./readme_images/pr_button.png)
+![button](./readme_images/pr_button.png)
 
-[screen](./readme_images/pr_screen.png)
+![screen](./readme_images/pr_screen.png)
