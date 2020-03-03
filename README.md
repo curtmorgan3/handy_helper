@@ -3,6 +3,8 @@
 ## [Trello Board]()
 
 ## Contributing
+
+### Developing Locally
 Clone this repo to your local machine
 
 Before starting a new feature, run `git checkout master && git pull` to get the most up to date `master` branch.
@@ -13,13 +15,20 @@ Make code changes to your local branch.
 
 To commit your changes locally, run `git add .`, then `git commit -m 'message describing commit`.
 
-Push your changes to the remote branch by running `git push --set-upstream origin cm/updating-readme`, replacing this branch name with your own.
+Push your changes to the remote branch by running `git push --set-upstream origin cm/updating-readme`, replacing this branch name with your own. You only need to set the upstream the first push. After that, running `git push` will be fine. 
 
-You only need to set the upstream the first push. After that, running `git push` will be fine. 
+### Submitting a Pull Request
 
 When the feature is complete and ready to be merged into the master branch, submit a Pull Request on GitHub. Navigate to https://github.com/curtmorgan3/handy_helper 
 
 ![button](https://github.com/curtmorgan3/handy_helper/blob/master/readme_images/pr_button.png)
 
-![screen](https://github.com/curtmorgan3/handy_helper/blob/master/readme_images/pr_screen.png)
 You should see a prompt to submit a PR on the recently pushed remote branch. Click on 'Compare and Pull Request'
+
+![screen](https://github.com/curtmorgan3/handy_helper/blob/master/readme_images/pr_screen.png)
+
+Fill out some relevant details about the branch, including any parameters needed to test functionality, then click 'Submit PR'
+
+All PRs will be reviewed by `curtmorgan3` before being merged. 
+
+Once a PR has been approved, it will be merged into `master` and the remote feature branch will be deleted. 
