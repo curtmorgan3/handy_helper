@@ -22,3 +22,4 @@ When the feature is complete and ready to be merged into the master branch, subm
 ![button](https://github.com/curtmorgan3/handy_helper/master/readme_images/pr_button.png)
 
 ![screen](https://github.com/curtmorgan3/handy_helper/master/readme_images/pr_screen.png)
+You should see a prompt to submit a PR on the recently pushed remote branch. Click on 'Compare and Pull Request'
