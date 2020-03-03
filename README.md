@@ -12,3 +12,7 @@ On your local machine, create a local branch for the feature you're implementing
 Make code changes to your local branch.
 
 Push your changes to the remote branch by running `git push`
+
+When the feature is complete and ready to be merged into the master branch, submit a Pull Request on GitHub. Navigate to https://github.com/curtmorgan3/handy_helper 
+
+You should see a prompt to submit a PR on the recently pushed remote branch. Click on 'Compare and Pull Request'
