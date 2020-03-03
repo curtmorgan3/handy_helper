@@ -19,7 +19,7 @@ You only need to set the upstream the first push. After that, running `git push`
 
 When the feature is complete and ready to be merged into the master branch, submit a Pull Request on GitHub. Navigate to https://github.com/curtmorgan3/handy_helper 
 
-![button][https://github.com/curtmorgan3/handy_helper/master/readme_images/pr_button.png]
+![button](https://github.com/curtmorgan3/handy_helper/blob/master/readme_images/pr_button.png)
 
-![screen][https://github.com/curtmorgan3/handy_helper/master/readme_images/pr_screen.png]
+![screen](https://github.com/curtmorgan3/handy_helper/blob/master/readme_images/pr_screen.png)
 You should see a prompt to submit a PR on the recently pushed remote branch. Click on 'Compare and Pull Request'
