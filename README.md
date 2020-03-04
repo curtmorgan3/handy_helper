@@ -1,8 +1,8 @@
 # Handy Helper 
 
-## [Trello Board](https://trello.com/b/NZXmoSgM)
+## [Kanban Board](https://github.com/curtmorgan3/handy_helper/projects/1)
 
-All cards in 'To-Do' need to be claimed. If you're comfortable with a described task, feel free to set yourself as a member on the card and move it into 'In Progress'. Each card should have its own feature branch.
+All cards in 'To-Do' need to be claimed. If you're comfortable with a described task, feel free to create an issue (right click a task and click "convert to issue"), set yourself as an assignee on the card and move it into 'In Progress'. Each card should have its own feature branch. 
 
 ## Requirements
 Ensure you have the latest version of Node on your local machine. I recommend using Node Version Manager to install and manage multiple Node versions: [NVM](https://github.com/nvm-sh/nvm/blob/master/README.md)
@@ -27,6 +27,8 @@ On your local machine, create a local branch for the feature you're implementing
 Make code changes to your local branch. 
 
 To commit your changes locally, run `git add .`, then `git commit -m 'message describing commit`.
+
+To push a commit directly to an issue that is generated from a task item in the Kanban board, simply add `#issueNo` to your commit message. For example, when working on issue #8, add `#8` to your commit message.
 
 Push your changes to the remote branch by running `git push --set-upstream origin cm/updating-readme`, replacing this branch name with your own. You only need to set the upstream the first push. After that, running `git push` will be fine. 
 
