@@ -1,6 +1,15 @@
 # Handy Helper 
 
-## [Trello Board]()
+## [Trello Board](https://trello.com/b/NZXmoSgM)
+
+## Requirements
+Ensure you have the latest version of Node on your local machine. I recommend using Node Version Manager to install and manage multiple Node versions: [NVM](https://github.com/nvm-sh/nvm/blob/master/README.md)
+
+Also, you'll need [Node Package Manager](https://www.npmjs.com/get-npm)
+
+To run the server locally, from the `server` directory, run `npm start`. A server should start on `127.0.0.1:3001`.
+
+To run the client locally, from the `client` directory, run `npm start`. A server should start on `127.0.0.1:3000`.
 
 ## Contributing
 
