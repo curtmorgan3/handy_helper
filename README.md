@@ -2,6 +2,8 @@
 
 ## [Trello Board](https://trello.com/b/NZXmoSgM)
 
+All cards in 'To-Do' need to be claimed. If you're comfortable with a described task, feel free to set yourself as a member on the card and move it into 'In Progress'. Each card should have its own feature branch.
+
 ## Requirements
 Ensure you have the latest version of Node on your local machine. I recommend using Node Version Manager to install and manage multiple Node versions: [NVM](https://github.com/nvm-sh/nvm/blob/master/README.md)
 
