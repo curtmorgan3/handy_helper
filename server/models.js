@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const { createHash } = require('./passwordEncrypt.js');
-const DATABASE_NAME = "";
+const DATABASE_NAME = "handy_helper_db";
 
 const sequelize = new Sequelize({
 	database: DATABASE_NAME,
