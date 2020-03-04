@@ -11,6 +11,8 @@ To run the server locally, from the `server` directory, run `npm start`. A serve
 
 To run the client locally, from the `client` directory, run `npm start`. A server should start on `127.0.0.1:3000`.
 
+To develop the server locally, you'll need a local install of [PostgreSQL](https://www.postgresqltutorial.com/install-postgresql/). Postgres will need to be running along side the local server in order for Database calls to be made. The linked tutorial covers this pretty well. To view changes to the database, you can use the included `psql` command line tool, but I recommend something like [Postico](https://eggerapps.at/postico/) to make your life much easier. 
+
 ## Contributing
 
 ### Developing Locally
