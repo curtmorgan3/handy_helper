@@ -22,7 +22,7 @@ async function createListing(){
 	await User.create({
 		skill: 'plumber',
 		isActive: true,
-		serviceDetails: 'bathroom sink is clogged"',
+		serviceDetails: 'bathroom sink is clogged',
 		suggestedPrice: 80.00,
 		location: 'Brooklyn, NY',
 	})
