@@ -34,7 +34,7 @@ const Booking = sequelize.define('booking', {
 	location: Sequelize.String,
 });
 
-const Listing = sequelize.define('booking', {
+const Listing = sequelize.define('listing', {
 	clientId: Sequelize.STRING,
 	skill: Sequelize.STRING,
 	created: Sequelize.STRING,
