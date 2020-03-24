@@ -25,8 +25,6 @@ const User = sequelize.define('user', {
 });
 
 const Booking = sequelize.define('booking', {
-	helperId: Sequelize.STRING,
-	clientId: Sequelize.STRING,
 	skill: Sequelize.STRING,
 	created: Sequelize.INTEGER,
 	serviceDetails: Sequelize.STRING,
@@ -35,11 +33,10 @@ const Booking = sequelize.define('booking', {
 });
 
 const Listing = sequelize.define('listing', {
-	clientId: Sequelize.STRING,
 	skill: Sequelize.STRING,
 	created: Sequelize.STRING,
-	active: Sequelize.BOOLEAN,
-	serviceDetails: Sequelize.BOOLEAN,
+	isActive: Sequelize.BOOLEAN,
+	serviceDetails: Sequelize.STRING,
 	suggestedPrice: Sequelize.FLOAT,
 	location: Sequelize.String,
 });
