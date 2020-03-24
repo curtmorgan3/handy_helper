@@ -17,10 +17,22 @@ async function createUser(){
 	})
 };
 
+async function createListing(){
+	await User.destroy({where: {} });
+	await User.create({
+		skill: 'plumber',
+		isActive: true,
+		serviceDetails: 'bathroom sink is clogged"',
+		suggestedPrice: 80.00,
+		location: 'Brooklyn, NY',
+	})
+};
+
 
 async function seed(){
 	try{
 		await createUser();
+		await createListing();
 	}catch(e){
 		console.error(e);
 	}
