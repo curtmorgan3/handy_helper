@@ -4,7 +4,7 @@ const { compare } = require('../passwordEncrypt.js');
 const { sign, passport } = require('../jwtEncrypt.js');
 
 // Create User
-userRouter.post('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
+userRouter.post('/', async (req, res) => {
 	try{
 		let {
 			email,

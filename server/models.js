@@ -16,7 +16,7 @@ const User = sequelize.define('user', {
 	password: Sequelize.STRING,
 	firstName: Sequelize.STRING,
 	lastName: Sequelize.STRING,
-	phone: Sequelize.INTEGER,
+	phone: Sequelize.STRING,
 	isActive: Sequelize.BOOLEAN,
 	isHelper: Sequelize.BOOLEAN,
 	skill: Sequelize.STRING,
