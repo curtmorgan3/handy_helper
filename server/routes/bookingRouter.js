@@ -1,5 +1,6 @@
 const bookingRouter = require('express').Router();
 // const { Booking } = require('../models.js'); <- uncomment when Booking model is implemented
+const { passport } = require('../jwtEncrypt.js');
 
 // Create
 bookingRouter.post('/', passport.authenticate('jwt', { session: false }), async (req, res) => {

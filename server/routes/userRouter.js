@@ -6,12 +6,29 @@ const { sign, passport } = require('../jwtEncrypt.js');
 // Create User
 userRouter.post('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
 	try{
-		let { username, password } = req.body;
+		let {
+			email,
+			password,
+			firstName,
+			lastName,
+			phone,
+			isHelper,
+			skill,
+			location
+		} = req.body;
 		let user = await User.create({
-			username,
-			password
+			email,
+			password,
+			firstName,
+			lastName,
+			phone,
+			isActive:  true,
+			isHelper,
+			skill,
+			averageRating: 0,
+			location
 		})
-		res.json({msg: `User ${username} created.`})
+		res.json({msg: `User ${user.email} created.`})
 	}catch (e){
 		res.json({Error: `${e}`});
 	}
