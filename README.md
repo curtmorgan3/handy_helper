@@ -1,5 +1,7 @@
 # Handy Helper 
 
+## adding the mock up
+
 ## [Kanban Board](https://github.com/curtmorgan3/handy_helper/projects/1)
 
 All cards in 'To-Do' need to be claimed. If you're comfortable with a described task, feel free to create an issue (right click a task and click "convert to issue"), set yourself as an assignee on the card and move it into 'In Progress'. Each card should have its own feature branch. 
