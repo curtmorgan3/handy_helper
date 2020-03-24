@@ -7,9 +7,9 @@ const cors = require('cors');
 const PORT = process.env.PORT || 3001;
 
 // Imported Routers 
-const { listingRouter } = require('./routes');
-const { bookingRouter } = require('./routes');
-const { userRouter } = require('./routes');
+const { listingRouter } = require('./routes/listingRouter.js');
+const { bookingRouter } = require('./routes/bookingRouter.js');
+const { userRouter } = require('./routes/userRouter.js');
 
 
 const app = express();

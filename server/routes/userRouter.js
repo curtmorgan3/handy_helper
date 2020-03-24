@@ -4,28 +4,41 @@ const { compare } = require('../passwordEncrypt.js');
 const { sign, passport } = require('../jwtEncrypt.js');
 
 // Create User
-userRouter.post('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
+userRouter.post('/', async (req, res) => {
 	try{
-		let { username, password } = req.body;
+		let {
+			email,
+			password,
+			firstName,
+			lastName,
+			phone,
+			isHelper,
+			skill,
+			location
+		} = req.body;
 		let user = await User.create({
-			username,
-			password
+			email,
+			password,
+			firstName,
+			lastName,
+			phone,
+			isActive:  true,
+			isHelper,
+			skill,
+			averageRating: 0,
+			location
 		})
-		res.json({msg: `User ${username} created.`})
+		res.json({msg: `User ${user.email} created.`})
 	}catch (e){
 		res.json({Error: `${e}`});
 	}
 });
 
-// Get User by Username passed in body
-userRouter.get('/', async (req, res)=>{
+// Get Current User 
+userRouter.get('/', passport.authenticate('jwt', { session: false }), async (req, res)=>{
 	try{
-		let { username } = req.body;
-		let user = await User.findOne({
-			where: {
-				username
-			}
-		});
+		const { user } = req;
+		
 		res.json({user})
 	}catch(e){
 		res.json({Error: `${e}`})
@@ -33,7 +46,7 @@ userRouter.get('/', async (req, res)=>{
 });
 
 // Get User by ID passed in params
-userRouter.get('/:id', async (req, res)=>{
+userRouter.get('/:id', passport.authenticate('jwt', { session: false }), async (req, res)=>{
 	try{
 		let user = await User.findByPk(req.params.id);
 		res.json({user})
@@ -58,7 +71,7 @@ userRouter.put('/', passport.authenticate('jwt', { session: false }), async (req
 	}
 });
 
-// Delete User
+// Delete Current User
 userRouter.delete('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
 	try{
 		let user = await User.findOne({where: {id: req.body.id}});
@@ -72,13 +85,13 @@ userRouter.delete('/', passport.authenticate('jwt', { session: false }), async (
 // User Login
 userRouter.post('/login', async (req, res) => {
 	try{
-		const { username, password } = req.body;
-		const user = await User.findOne({where: {username}});
+		const { email, password } = req.body;
+		const user = await User.findOne({where: {email}});
 		const isValid = await compare(password, user.password);
-		if(isValid){
+		if (isValid){
 			const token = sign({
 				id: user.id,
-				username: user.username,
+				email: user.email,
 			});
 			res.json({ user, token });
 		}else{

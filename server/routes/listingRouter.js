@@ -1,5 +1,7 @@
 const listingRouter = require('express').Router();
 // const { Listing } = require('../models.js'); <- uncomment when Listing model is implemented
+const { passport } = require('../jwtEncrypt.js');
+
 
 // Create
 listingRouter.post('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
