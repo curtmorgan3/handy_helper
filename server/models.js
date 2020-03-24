@@ -12,8 +12,16 @@ const sequelize = new Sequelize({
 });
 
 const User = sequelize.define('user', {
-	username: Sequelize.STRING,
-	password: Sequelize.STRING
+	email: Sequelize.STRING,
+	password: Sequelize.STRING,
+	firstName: Sequelize.STRING,
+	lastName: Sequelize.STRING,
+	phone: Sequelize.INTEGER,
+	isActive: Sequelize.BOOLEAN,
+	isHelper: Sequelize.BOOLEAN,
+	skill: Sequelize.STRING,
+	averageRating: Sequelize.INTERGER,
+	location: Sequelize.STRING
 });
 
 User.beforeCreate(async (user, options) => {

@@ -4,8 +4,16 @@ const { User } = require('./models.js');
 async function createUser(){
 	await User.destroy({where: {} });
 	await User.create({
-		username: 'sampleuser@sample.com',
-		password: 'password'
+		email: 'sampleuser@sample.com',
+		password: 'password',
+		firstName: 'Joe',
+		lastName: 'Sample',
+		phone: 0,
+		isActive: true,
+		isHelper: false,
+		skill: 'plumber',
+		averageRating: 0,
+		location: 'New York City, NY'
 	})
 };
 
