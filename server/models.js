@@ -24,6 +24,24 @@ const User = sequelize.define('user', {
 	location: Sequelize.STRING
 });
 
+const Booking = sequelize.define('booking', {
+	skill: Sequelize.STRING,
+	created: Sequelize.INTEGER,
+	serviceDetails: Sequelize.STRING,
+	price: Sequelize.FLOAT,
+	location: Sequelize.String,
+});
+
+const Listing = sequelize.define('listing', {
+	skill: Sequelize.STRING,
+	created: Sequelize.STRING,
+	isActive: Sequelize.BOOLEAN,
+	serviceDetails: Sequelize.STRING,
+	suggestedPrice: Sequelize.FLOAT,
+	location: Sequelize.String,
+});
+
+
 User.beforeCreate(async (user, options) => {
 	const passwordDigest = await createHash(user.password);
 	user.password = passwordDigest;
@@ -38,5 +56,7 @@ User.beforeUpdate(async (user, options) => {
 
 module.exports = {
 	sequelize,
-	User
+	User,
+	Booking,
+	Listing
 }
