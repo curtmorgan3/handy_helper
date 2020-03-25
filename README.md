@@ -26,7 +26,7 @@ On your local machine, create a local branch for the feature you're implementing
 
 Make code changes to your local branch. 
 
-To commit your changes locally, run `git add .`, then `git commit -m 'message describing commit`.
+To commit your changes locally, run `git add .`, then `git commit -m 'message describing commit'`.
 
 To push a commit directly to an issue that is generated from a task item in the Kanban board, simply add `#issueNo` to your commit message. For example, when working on issue #8, add `#8` to your commit message.
 
