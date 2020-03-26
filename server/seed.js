@@ -1,5 +1,4 @@
-const { User } = require('./models.js');
-const { Listing } = require('./models.js');
+const { User, Listing } = require('./models.js');
 
 // Sample data used for testing and development only
 async function createUser(){
