@@ -1,4 +1,5 @@
 const { User } = require('./models.js');
+const { Listing } = require('./models.js');
 
 // Sample data used for testing and development only
 async function createUser(){
@@ -18,8 +19,8 @@ async function createUser(){
 };
 
 async function createListing(){
-	await User.destroy({where: {} });
-	await User.create({
+	await Listing.destroy({where: {} });
+	await Listing.create({
 		skill: 'plumber',
 		isActive: true,
 		serviceDetails: 'bathroom sink is clogged',
