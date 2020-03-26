@@ -26,7 +26,6 @@ const User = sequelize.define('user', {
 
 const Booking = sequelize.define('booking', {
 	skill: Sequelize.STRING,
-	created: Sequelize.INTEGER,
 	serviceDetails: Sequelize.STRING,
 	price: Sequelize.FLOAT,
 	location: Sequelize.String,
@@ -34,7 +33,6 @@ const Booking = sequelize.define('booking', {
 
 const Listing = sequelize.define('listing', {
 	skill: Sequelize.STRING,
-	created: Sequelize.STRING,
 	isActive: Sequelize.BOOLEAN,
 	serviceDetails: Sequelize.STRING,
 	suggestedPrice: Sequelize.FLOAT,
