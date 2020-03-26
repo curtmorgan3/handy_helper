@@ -1,4 +1,4 @@
-const { User } = require('./models.js');
+const { User, Listing } = require('./models.js');
 
 // Sample data used for testing and development only
 async function createUser(){
@@ -17,10 +17,22 @@ async function createUser(){
 	})
 };
 
+async function createListing(){
+	await Listing.destroy({where: {} });
+	await Listing.create({
+		skill: 'plumber',
+		isActive: true,
+		serviceDetails: 'bathroom sink is clogged',
+		suggestedPrice: 80.00,
+		location: 'Brooklyn, NY',
+	})
+};
+
 
 async function seed(){
 	try{
 		await createUser();
+		await createListing();
 	}catch(e){
 		console.error(e);
 	}
