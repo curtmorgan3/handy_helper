@@ -1,43 +1,64 @@
 const listingRouter = require('express').Router();
-// const { Listing } = require('../models.js'); <- uncomment when Listing model is implemented
+const { Listing } = require('../models.js');
 const { passport } = require('../jwtEncrypt.js');
 
-
-// Create
+// Create listing
 listingRouter.post('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
 	try{
-
-		res.json({msg: ``})
+		let {
+			skill,
+			serviceDetails,
+			suggestedPrice,
+			location
+		} = req.body;
+		let listing = await Listing.create({
+			skill,
+			isActive: true,
+			serviceDetails,
+			suggestedPrice,
+			location
+		})
+		res.json({msg: `Listing ${listing.skill} created.`})
 	}catch (e){
 		res.json({Error: `${e}`});
 	}
 });
 
-// Read
+// Read listing
 listingRouter.get('/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
 	try{
-
-		res.json({msg: ``})
+		let listing = await Listing.findByPk(req.params.id);
+		res.json({listing})
 	}catch (e){
 		res.json({Error: `${e}`});
 	}
 });
 
-// Update
+// Update listing
 listingRouter.put('/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
 	try{
-
-		res.json({msg: ``})
+		let listing = await Listing.findByPk(req.params.id);
+		let { skill, isActive, serviceDetails, suggestedPrice, location } = req.body;
+		listing.update({
+			skill,
+			isActive,
+			serviceDetails,
+			suggestedPrice,
+			location
+		});
+		listing.save();
+		res.json({msg: `Listing ${listing.skill} updated`});
 	}catch (e){
 		res.json({Error: `${e}`});
 	}
 });
 
-// Destroy
+// Destroy listing
 listingRouter.delete('/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
 	try{
-
-		res.json({msg: ``})
+		let listing = await Listing.findByPk(req.params.id);
+		await listing.destroy();
+		res.json({msg: `Listing ${listing.skill} destroyed`});
 	}catch (e){
 		res.json({Error: `${e}`});
 	}
