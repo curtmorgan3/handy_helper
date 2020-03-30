@@ -24,7 +24,17 @@ listingRouter.post('/', passport.authenticate('jwt', { session: false }), async 
 	}
 });
 
-// Read listing
+// Read all listings
+listingRouter.get('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
+	try{
+		let listings = await Listing.findAll();
+		res.json({listings})
+	}catch (e){
+		res.json({Error: `${e}`});
+	}
+});
+
+// Read individual listing
 listingRouter.get('/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
 	try{
 		let listing = await Listing.findByPk(req.params.id);
