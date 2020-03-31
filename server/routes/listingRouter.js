@@ -5,13 +5,13 @@ const { passport } = require('../jwtEncrypt.js');
 // Create listing
 listingRouter.post('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
 	try {
-		let {
+		const {
 			skill,
 			serviceDetails,
 			suggestedPrice,
 			location
 		} = req.body;
-		let listing = await Listing.create({
+		const listing = await Listing.create({
 			skill,
 			isActive: true,
 			serviceDetails,
@@ -45,6 +45,7 @@ listingRouter.get('/:id', passport.authenticate('jwt', { session: false }), asyn
 });
 
 // Update listing
+// TODO: Ensure that a user can only update his/her own listings
 listingRouter.put('/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
 	try {
 		let listing = await Listing.findByPk(req.params.id);
