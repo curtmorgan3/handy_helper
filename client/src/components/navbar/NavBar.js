@@ -1,5 +1,7 @@
 import React from 'react';
 import { Navbar, Nav, NavDropdown, Button } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 export default function NavBar(props) {
     return (
@@ -21,9 +23,10 @@ export default function NavBar(props) {
                     <Nav.Link href="#home">Contact</Nav.Link>
                 </Nav>
                 <Nav>
-                    <Nav.Link href="#login">LOG IN</Nav.Link>
-                    <Nav.Link href="#signup">SIGN UP</Nav.Link>
-                    <Button variant="outline-success">Post a Listing</Button>
+                    <Nav.Link href="#login">Log in</Nav.Link>
+                    <Nav.Link href="#signup">Sign up</Nav.Link>
+                    <Nav.Link href="#profile"><FontAwesomeIcon icon={faUser}/> Profile</Nav.Link>
+                    {/*<Button variant="outline-success">Post a Listing</Button>*/}
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
