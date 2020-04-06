@@ -1,17 +1,41 @@
 import React from 'react';
-import NavBar from './components/navbar';
-import Index from './components/indexPage';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function App() {
-  return (
-    <div className="App">
-      <NavBar />
-      <div className="main">
-        <Index />
+import ScrollToTop from './components/Helpers/ScrollToTop';
+import NotFound from './components/Helpers/NotFound';
+
+import NavBar from './components/navbar';
+import Index from './components/indexPage';
+import SignUp from './components/SignUp';
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <Router>
+          <ScrollToTop>
+            <NavBar />
+            <div className="main">
+  
+              <Switch>
+                <Route exact path='/' component={Index} />
+                <Route exact path='/signup' component={SignUp} />
+  
+                <Route component={NotFound} />
+              </Switch>
+  
+            </div>
+          </ScrollToTop>
+  
+        </Router>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default App;
