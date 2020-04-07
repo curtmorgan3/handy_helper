@@ -25,6 +25,7 @@ export default function NavBar(props) {
                 <Nav>
                     <Nav.Link href="/signup">Log in</Nav.Link>
                     <Nav.Link href="/signup">Sign up</Nav.Link>
+                    <Nav.Link href="/settings">Settings</Nav.Link>
                     <Nav.Link href="/"><FontAwesomeIcon icon={faUser}/>Profile</Nav.Link>
                     {/*<Button variant="outline-success">Post a Listing</Button>*/}
                 </Nav>
