@@ -33,7 +33,7 @@ export default class Ajax{
 
 	static async getCurrentUser(token){
 		try {
-			let response = await axios.get(`${BASE_URL}/users/currentuser`, {
+			let response = await axios.get(`${BASE_URL}/users/`, {
 				headers: {
 					'Authorization': `Bearer ${token}`
 				}

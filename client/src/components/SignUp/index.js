@@ -1,8 +1,16 @@
 import React from 'react';
 import './style.scss';
-import { Redirect, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setCurrentUser } from '../../redux/actions.js';
+import { Redirect } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import Ajax from '../../Ajax.js';
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setCurrentUser: (user) => dispatch(setCurrentUser(user))
+  }
+}
 
 export default class SignUp extends React.Component {
   constructor(props) {
@@ -23,7 +31,7 @@ export default class SignUp extends React.Component {
   }
 
   componentDidMount() {
-    if (localStorage.getItem('handy_helpers_token')) {
+    if (localStorage.getItem('handy_helper_token')) {
       this.setState({
         loggedIn: true
       })
@@ -44,6 +52,7 @@ export default class SignUp extends React.Component {
 		}
 		const response = await Ajax.userLogin(data);
 		if(response.user){
+      this.props.setCurrentUser(response.user);
 			localStorage.setItem('handy_helper_token', response.token);
 			this.setState({
 				loggedIn: true
@@ -113,3 +122,5 @@ export default class SignUp extends React.Component {
     )
   }
 }
+
+SignUp = connect(null, mapDispatchToProps)(SignUp);
