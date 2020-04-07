@@ -107,7 +107,7 @@ export default class SignUp extends React.Component {
               <Form.Control name='location' value={this.state.location} onChange={this.handleChange} type='text' />
 
               <Form.Label>Skill</Form.Label>
-              <Form.Control name='skill' value={this.state.location} onChange={this.handleChange} type='text' />
+              <Form.Control name='skill' value={this.state.skill} onChange={this.handleChange} type='text' />
 
               <Form.Label>Email</Form.Label>
               <Form.Control name='email' value={this.state.email} onChange={this.handleChange} type='email' />

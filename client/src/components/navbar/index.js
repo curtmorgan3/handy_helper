@@ -3,6 +3,7 @@ import { Navbar, Nav, NavDropdown, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { signUserOut } from '../../redux/actions.js';
 
 const mapStateToProps = (state) => {
@@ -21,26 +22,46 @@ export default function NavBar(props) {
         props.currentUser.token
         ? (
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-            <Navbar.Brand href="/">Handy Helper</Navbar.Brand>
+            <Navbar.Brand>Handy Helper</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link href="/">Home</Nav.Link>
-                    <Nav.Link href="/">About</Nav.Link>
-                    <NavDropdown title="Services" id="basic-nav-dropdown">
-                        <NavDropdown.Item href="/">View Services</NavDropdown.Item>
-                        <NavDropdown.Item href="/">Post Service</NavDropdown.Item>
+                    <Nav.Link>
+                        <Link to='/' className='nav-link'>Home</Link>
+                    </Nav.Link>
+                    <Nav.Link>
+                        <Link to='/' className='nav-link'>About</Link>
+                    </Nav.Link>
+                    <NavDropdown className='nav-link' title="Services" id="basic-nav-dropdown">
+                        <NavDropdown.Item>View Services
+                            <Link to='/' className='nav-link'></Link>
+                        </NavDropdown.Item>
+                        <NavDropdown.Item>Post Service
+                            <Link to='/' className='nav-link'></Link>
+                        </NavDropdown.Item>
                     </NavDropdown>
-                    <NavDropdown title="Listings" id="basic-nav-dropdown">
-                        <NavDropdown.Item href="/">View Listings</NavDropdown.Item>
-                        <NavDropdown.Item href="/">Post Listing</NavDropdown.Item>
+                    <NavDropdown className='nav-link' title="Listings" id="basic-nav-dropdown">
+                        <NavDropdown.Item> View Listings
+                            <Link to='/' className='nav-link'></Link>
+                        </NavDropdown.Item>
+                        <NavDropdown.Item>Post Listing
+                            <Link to='/' className='nav-link'></Link>
+                        </NavDropdown.Item>
                     </NavDropdown>
-                    <Nav.Link href="/">Contact</Nav.Link>
+                    <Nav.Link >
+                        <Link className='nav-link' to='/'>Contact</Link>
+                    </Nav.Link>
                 </Nav>
                 <Nav>
-                    <Nav.Link href="/"><FontAwesomeIcon icon={faUser}/>Profile</Nav.Link>
-                    <Nav.Link href="/settings">Settings</Nav.Link>
-                    <Nav.Link href='/' onClick={()=> props.signUserOut()}>Sign Out</Nav.Link>
+                    <Nav.Link>
+                        <Link to='/' className='nav-link'><FontAwesomeIcon icon={faUser}/>Profile</Link>
+                    </Nav.Link>
+                    <Nav.Link>
+                        <Link className='nav-link' to="/settings">Settings</Link>
+                    </Nav.Link>
+                    <Nav.Link>
+                        <Link className='nav-link' to="/" onClick={()=> props.signUserOut()}>Sign Out</Link>
+                    </Nav.Link>
                     {/*<Button variant="outline-success">Post a Listing</Button>*/}
                 </Nav>
             </Navbar.Collapse>
@@ -49,25 +70,39 @@ export default function NavBar(props) {
         ) : ( 
 
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                <Navbar.Brand href="/">Handy Helper</Navbar.Brand>
+                <Navbar.Brand>Handy Helper</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
-                        <Nav.Link href="/">Home</Nav.Link>
-                        <Nav.Link href="/">About</Nav.Link>
-                        <NavDropdown title="Services" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="/">View Services</NavDropdown.Item>
-                            <NavDropdown.Item href="/">Post Service</NavDropdown.Item>
+                        <Nav.Link>
+                            <Link to='/' className='nav-link'>Home</Link>
+                        </Nav.Link>
+                        <Nav.Link>
+                            <Link to='/' className='nav-link'>About</Link>
+                        </Nav.Link>
+                        <NavDropdown className='nav-link' title="Services" id="basic-nav-dropdown">
+                            <NavDropdown.Item>View Services
+                                <Link to='/' className='nav-link'></Link>
+                            </NavDropdown.Item>
+                            <NavDropdown.Item>Post Service
+                                <Link to='/' className='nav-link'></Link>
+                            </NavDropdown.Item>
                         </NavDropdown>
-                        <NavDropdown title="Listings" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="/">View Listings</NavDropdown.Item>
-                            <NavDropdown.Item href="/">Post Listing</NavDropdown.Item>
+                        <NavDropdown className='nav-link' title="Listings" id="basic-nav-dropdown">
+                            <NavDropdown.Item> View Listings
+                                <Link to='/' className='nav-link'></Link>
+                            </NavDropdown.Item>
+                            <NavDropdown.Item>Post Listing
+                                <Link to='/' className='nav-link'></Link>
+                            </NavDropdown.Item>
                         </NavDropdown>
-                        <Nav.Link href="/">Contact</Nav.Link>
+                        <Nav.Link >
+                            <Link className='nav-link' to='/'>Contact</Link>
+                        </Nav.Link>
                     </Nav>
                     <Nav>
-                        <Nav.Link href="/signup">Log in</Nav.Link>
-                        <Nav.Link href="/signup">Sign up</Nav.Link>
+                        <Nav.Link><Link className='nav-link' to="/signup">Log In</Link></Nav.Link>
+                        <Nav.Link><Link className='nav-link' to="/signup">Sign Up</Link></Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

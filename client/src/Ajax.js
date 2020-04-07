@@ -59,7 +59,7 @@ export default class Ajax{
 
 	static async updateUser(payload){
 		try {
-			let token = localStorage.getItem('snacks_from_scratch_user_token');
+			let token = localStorage.getItem('handy_helper_token');
 			let response = await axios.put(`${BASE_URL}/users/`, payload,
 				{headers: {
 					'Authorization': `Bearer ${token}`
