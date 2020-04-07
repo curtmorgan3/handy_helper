@@ -8,6 +8,7 @@ import NotFound from './components/Helpers/NotFound';
 import NavBar from './components/navbar';
 import Index from './components/indexPage';
 import SignUp from './components/SignUp';
+import Settings from './components/Settings';
 
 class App extends React.Component {
   constructor(props) {
@@ -25,6 +26,7 @@ class App extends React.Component {
               <Switch>
                 <Route exact path='/' component={Index} />
                 <Route exact path='/signup' component={SignUp} />
+                <Route exact path='/settings' component={Settings} />
   
                 <Route component={NotFound} />
               </Switch>

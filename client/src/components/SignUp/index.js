@@ -10,10 +10,16 @@ export default class SignUp extends React.Component {
     this.state = {
       email: '',
       password: '',
+      fName: '',
+      lName: '',
+      phone: '',
+      location: '',
+      skill: '',
       loggedIn: false
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSignup = this.handleSignup.bind(this);
   }
 
   componentDidMount() {
@@ -47,6 +53,24 @@ export default class SignUp extends React.Component {
 		}
   }
 
+  async handleSignup(e) {
+    e.preventDefault();
+    const data = {
+			email: this.state.email,
+      password: this.state.password,
+      firstName: this.state.fName,
+      lastName: this.state.lName,
+      phone: this.state.phone,
+      location: this.state.location,
+      skill: this.state.skill
+		}
+    const response = await Ajax.createUser(data);
+    localStorage.setItem('handy_helper_token', response.token);
+    this.setState({
+      loggedIn: true
+    });
+  }
+
   render() {
     return(
       this.state.loggedIn ? (<Redirect to='/' />) : (
@@ -58,11 +82,31 @@ export default class SignUp extends React.Component {
               <Form.Label>Password</Form.Label>
               <Form.Control type='password' name='password' value={this.state.password} onChange={this.handleChange}/>
             </Form>
-            <Button variant='success' onClick={this.handleSubmit}>Login</Button>
-            <div className='login-links'>
-              <Link to='/contact-us'><Button>Contact Us</Button></Link>
-              <Link to='/signup'><Button>Sign Up</Button></Link>
-            </div>
+            <Button variant='primary' onClick={this.handleSubmit}>Login</Button>
+            <h3 style={{textAlign: 'center'}}>or</h3>
+            <Form>
+              <Form.Label>First Name</Form.Label>
+              <Form.Control name='fName' value={this.state.fName} onChange={this.handleChange} type='text' />
+
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control name='lName' value={this.state.lName} onChange={this.handleChange} type='text' />
+
+              <Form.Label>Phone Number</Form.Label>
+              <Form.Control name='phone' value={this.state.phone} onChange={this.handleChange} type='text' />
+
+              <Form.Label>Location</Form.Label>
+              <Form.Control name='location' value={this.state.location} onChange={this.handleChange} type='text' />
+
+              <Form.Label>Skill</Form.Label>
+              <Form.Control name='skill' value={this.state.location} onChange={this.handleChange} type='text' />
+
+              <Form.Label>Email</Form.Label>
+              <Form.Control name='email' value={this.state.email} onChange={this.handleChange} type='email' />
+
+              <Form.Label>Password</Form.Label>
+              <Form.Control type='password' name='password' value={this.state.password} onChange={this.handleChange}/>
+            </Form>
+            <Button variant='success' onClick={this.handleSignup}>Sign Up</Button>
           </div>
         </div>
       )
