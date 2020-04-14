@@ -73,8 +73,9 @@ export default class SignUp extends React.Component {
       location: this.state.location,
       skill: this.state.skill
 		}
-    const response = await Ajax.createUser(data);
-    localStorage.setItem('handy_helper_token', response.token);
+    await Ajax.createUser(data);
+    const loginResponse = await Ajax.userLogin(data);
+    localStorage.setItem('handy_helper_token', loginResponse.token);
     this.setState({
       loggedIn: true
     });
@@ -87,11 +88,11 @@ export default class SignUp extends React.Component {
           <div className='login-form'>
             <Form>
               <Form.Label>Email</Form.Label>
-              <Form.Control name='email' value={this.state.email} onChange={this.handleChange} type='email' />
+              <Form.Control id='login-email' name='email' value={this.state.email} onChange={this.handleChange} type='email' />
               <Form.Label>Password</Form.Label>
-              <Form.Control type='password' name='password' value={this.state.password} onChange={this.handleChange}/>
+              <Form.Control id='login-pw' type='password' name='password' value={this.state.password} onChange={this.handleChange}/>
             </Form>
-            <Button variant='primary' onClick={this.handleSubmit}>Login</Button>
+            <Button id='login-btn' variant='primary' onClick={this.handleSubmit}>Login</Button>
             <h3 style={{textAlign: 'center'}}>or</h3>
             <Form>
               <Form.Label>First Name</Form.Label>
@@ -115,7 +116,7 @@ export default class SignUp extends React.Component {
               <Form.Label>Password</Form.Label>
               <Form.Control type='password' name='password' value={this.state.password} onChange={this.handleChange}/>
             </Form>
-            <Button variant='success' onClick={this.handleSignup}>Sign Up</Button>
+            <Button id='signup-btn' variant='success' onClick={this.handleSignup}>Sign Up</Button>
           </div>
         </div>
       )

@@ -5,6 +5,7 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { signUserOut } from '../../redux/actions.js';
+import './style.scss';
 
 const mapStateToProps = (state) => {
 	return{
@@ -26,12 +27,8 @@ export default function NavBar(props) {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link>
-                        <Link to='/' className='nav-link'>Home</Link>
-                    </Nav.Link>
-                    <Nav.Link>
-                        <Link to='/' className='nav-link'>About</Link>
-                    </Nav.Link>
+                    <Link to='/' className='nav-link'>Home</Link>
+                    <Link to='/' className='nav-link'>About</Link>
                     <NavDropdown className='nav-link' title="Services" id="basic-nav-dropdown">
                         <NavDropdown.Item>View Services
                             <Link to='/' className='nav-link'></Link>
@@ -48,20 +45,12 @@ export default function NavBar(props) {
                             <Link to='/' className='nav-link'></Link>
                         </NavDropdown.Item>
                     </NavDropdown>
-                    <Nav.Link >
-                        <Link className='nav-link' to='/'>Contact</Link>
-                    </Nav.Link>
+                    <Link className='nav-link' to='/'>Contact</Link>
                 </Nav>
                 <Nav>
-                    <Nav.Link>
-                        <Link to='/' className='nav-link'><FontAwesomeIcon icon={faUser}/>Profile</Link>
-                    </Nav.Link>
-                    <Nav.Link>
-                        <Link className='nav-link' to="/settings">Settings</Link>
-                    </Nav.Link>
-                    <Nav.Link>
-                        <Link className='nav-link' to="/" onClick={()=> props.signUserOut()}>Sign Out</Link>
-                    </Nav.Link>
+                    <Link to='/' className='nav-link'><FontAwesomeIcon icon={faUser}/>Profile</Link>
+                    <Link className='nav-link' to="/settings">Settings</Link>
+                    <Link className='nav-link' to="/" onClick={()=> props.signUserOut()}>Sign Out</Link>
                     {/*<Button variant="outline-success">Post a Listing</Button>*/}
                 </Nav>
             </Navbar.Collapse>
@@ -74,12 +63,8 @@ export default function NavBar(props) {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
-                        <Nav.Link>
-                            <Link to='/' className='nav-link'>Home</Link>
-                        </Nav.Link>
-                        <Nav.Link>
-                            <Link to='/' className='nav-link'>About</Link>
-                        </Nav.Link>
+                        <Link to='/' className='nav-link'>Home</Link>
+                        <Link to='/' className='nav-link'>About</Link>
                         <NavDropdown className='nav-link' title="Services" id="basic-nav-dropdown">
                             <NavDropdown.Item>View Services
                                 <Link to='/' className='nav-link'></Link>
@@ -96,13 +81,11 @@ export default function NavBar(props) {
                                 <Link to='/' className='nav-link'></Link>
                             </NavDropdown.Item>
                         </NavDropdown>
-                        <Nav.Link >
-                            <Link className='nav-link' to='/'>Contact</Link>
-                        </Nav.Link>
+                        <Link className='nav-link' to='/'>Contact</Link>
                     </Nav>
                     <Nav>
-                        <Nav.Link><Link className='nav-link' to="/signup">Log In</Link></Nav.Link>
-                        <Nav.Link><Link className='nav-link' to="/signup">Sign Up</Link></Nav.Link>
+                        <Link className='nav-link' to="/signup">Log In</Link>
+                        <Link className='nav-link' to="/signup">Sign Up</Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

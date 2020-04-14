@@ -28,7 +28,7 @@ userRouter.post('/', async (req, res) => {
 			averageRating: 0,
 			location
 		})
-		res.json({msg: `User ${user.email} created.`})
+		res.json({user})
 	}catch (e){
 		res.json({Error: `${e}`});
 	}

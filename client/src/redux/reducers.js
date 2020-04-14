@@ -17,6 +17,7 @@ const userReducer = (state = initialUserState, action) => {
 
     case SIGN_USER_OUT:
       localStorage.removeItem('handy_helper_token');
+      window.location.reload();
       return update(state, {
         currentUser: {}
       }); 
