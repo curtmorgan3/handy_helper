@@ -26,6 +26,7 @@ export default class BuildProfile extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    console.log(this.props);
   }
 
   handleChange(e) {
@@ -74,9 +75,8 @@ export default class BuildProfile extends React.Component {
             <Form>
               <Form.Label>Location</Form.Label>
               <Form.Control name='location' value={this.state.location} onChange={this.handleChange} type='text' />
-
               {
-                this.props.currentUser.isHelper
+                this.props.currentUser.user?.isHelper
                   ? (
                     <div>
                       <Form.Label>Skills</Form.Label>
