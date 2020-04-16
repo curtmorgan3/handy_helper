@@ -20,13 +20,20 @@ export default class BuildProfile extends React.Component {
       updated: false,
       location: '',
       // Adjust later - temporary hack to store skills and experience descripiton in one field
-      skill1: '',
-      experience: '',
       skill: '',
+      experience: '',
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    console.log(this.props);
+  }
+
+  componentDidMount(){
+    const [skills, description] = this.props.currentUser.user?.skill.split('#');
+    this.setState({
+      location: this.props.currentUser.user?.location,
+      experience: description,
+      skill: skills
+    });
   }
 
   handleChange(e) {
@@ -39,7 +46,7 @@ export default class BuildProfile extends React.Component {
     e.preventDefault();
     const data = {
       location: this.state.location,
-      skill: this.state.skill1 + '#' + this.state.experience,
+      skill: this.state.skill + '#' + this.state.experience,
     }
     const response = await Ajax.updateUser(data);
     if (response.Error) {
@@ -48,7 +55,6 @@ export default class BuildProfile extends React.Component {
       this.setState({
         updated: true,
         location: '',
-        skill1: '',
         experience: '',
         skill: ''
       });
@@ -80,7 +86,7 @@ export default class BuildProfile extends React.Component {
                   ? (
                     <div>
                       <Form.Label>Skills</Form.Label>
-                      <Form.Control name='skill1' value={this.state.skill1} onChange={this.handleChange} type='text' />
+                      <Form.Control name='skill' value={this.state.skill} onChange={this.handleChange} type='text' />
 
                       <Form.Label>Experience</Form.Label>
                       <Form.Control name='experience' value={this.state.experience} onChange={this.handleChange} type='text' />
