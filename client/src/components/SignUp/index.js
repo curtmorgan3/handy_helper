@@ -3,7 +3,7 @@ import './style.scss';
 import { connect } from 'react-redux';
 import { setCurrentUser } from '../../redux/actions.js';
 import { Redirect } from 'react-router-dom';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Alert } from 'react-bootstrap';
 import Ajax from '../../Ajax.js';
 
 const mapDispatchToProps = (dispatch) => {
@@ -73,12 +73,17 @@ export default class SignUp extends React.Component {
       location: this.state.location,
       isHelper: this.state.type === 'Helper'
 		}
-    await Ajax.createUser(data);
-    const loginResponse = await Ajax.userLogin(data);
-    localStorage.setItem('handy_helper_token', loginResponse.token);
-    this.setState({
-      loggedIn: true
-    });
+    const response = await Ajax.createUser(data);
+
+    if (response.Error) {
+      window.alert('Email already registered to an account.');
+    } else {
+      const loginResponse = await Ajax.userLogin(data);
+      localStorage.setItem('handy_helper_token', loginResponse.token);
+      this.setState({
+        loggedIn: true
+      });
+    }
   }
 
   render() {

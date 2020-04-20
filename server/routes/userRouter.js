@@ -15,6 +15,12 @@ userRouter.post('/', async (req, res) => {
 			isHelper,
 			location
 		} = req.body;
+
+		const existingUser = await User.findOne({where: {email }});
+		if (existingUser) {
+			throw Error('Email already registered')
+		}
+
 		let user = await User.create({
 			email,
 			password,
