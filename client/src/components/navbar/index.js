@@ -48,7 +48,7 @@ export default function NavBar(props) {
                     <Link className='nav-link' to='/'>Contact</Link>
                 </Nav>
                 <Nav>
-                    <Link to='/' className='nav-link'><FontAwesomeIcon icon={faUser}/>Profile</Link>
+                    <Link to='/buildprofile' className='nav-link'><FontAwesomeIcon icon={faUser}/>Profile</Link>
                     <Link className='nav-link' to="/settings">Settings</Link>
                     <Link className='nav-link' to="/" onClick={()=> props.signUserOut()}>Sign Out</Link>
                     {/*<Button variant="outline-success">Post a Listing</Button>*/}
