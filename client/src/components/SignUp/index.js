@@ -22,7 +22,7 @@ export default class SignUp extends React.Component {
       lName: '',
       phone: '',
       location: '',
-      skill: '',
+      type: '',
       loggedIn: false
     }
     this.handleChange = this.handleChange.bind(this);
@@ -71,7 +71,7 @@ export default class SignUp extends React.Component {
       lastName: this.state.lName,
       phone: this.state.phone,
       location: this.state.location,
-      skill: this.state.skill
+      isHelper: this.state.type === 'Helper'
 		}
     await Ajax.createUser(data);
     const loginResponse = await Ajax.userLogin(data);
@@ -101,20 +101,24 @@ export default class SignUp extends React.Component {
               <Form.Label>Last Name</Form.Label>
               <Form.Control name='lName' value={this.state.lName} onChange={this.handleChange} type='text' />
 
+              <Form.Label>Email</Form.Label>
+              <Form.Control name='email' value={this.state.email} onChange={this.handleChange} type='email' />
+
+              <Form.Label>Password</Form.Label>
+              <Form.Control type='password' name='password' value={this.state.password} onChange={this.handleChange}/>
+
               <Form.Label>Phone Number</Form.Label>
               <Form.Control name='phone' value={this.state.phone} onChange={this.handleChange} type='text' />
 
               <Form.Label>Location</Form.Label>
               <Form.Control name='location' value={this.state.location} onChange={this.handleChange} type='text' />
 
-              <Form.Label>Skill</Form.Label>
-              <Form.Control name='skill' value={this.state.skill} onChange={this.handleChange} type='text' />
+              <Form.Label>I am a...</Form.Label>
+              <Form.Control as='select' name='type' value={this.state.type} onChange={this.handleChange}>
+                <option>Customer</option>
+                <option>Helper</option>
+              </Form.Control>
 
-              <Form.Label>Email</Form.Label>
-              <Form.Control name='email' value={this.state.email} onChange={this.handleChange} type='email' />
-
-              <Form.Label>Password</Form.Label>
-              <Form.Control type='password' name='password' value={this.state.password} onChange={this.handleChange}/>
             </Form>
             <Button id='signup-btn' variant='success' onClick={this.handleSignup}>Sign Up</Button>
           </div>

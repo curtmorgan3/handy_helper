@@ -13,7 +13,6 @@ userRouter.post('/', async (req, res) => {
 			lastName,
 			phone,
 			isHelper,
-			skill,
 			location
 		} = req.body;
 		let user = await User.create({
@@ -24,7 +23,6 @@ userRouter.post('/', async (req, res) => {
 			phone,
 			isActive:  true,
 			isHelper,
-			skill,
 			averageRating: 0,
 			location
 		})

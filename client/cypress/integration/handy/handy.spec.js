@@ -1,6 +1,13 @@
 describe('Handy Helper Tests', () => {
   // Sign Up
   it('Registers for an Account', () => {
+
+    /*
+    Sign up with new email
+    Sign up with existing email
+    Check for JWT 
+    */
+
     cy.visit('127.0.0.1:3000');
 
     cy.contains('Sign Up').click();
@@ -12,7 +19,7 @@ describe('Handy Helper Tests', () => {
     cy.get('[name="fName"]').type('Curt');
     cy.get('[name="lName"]').type('Morgan');
     cy.get('[name="phone"]').type('999-999-9999');
-    cy.get('[name="skill"]').type('Electrical');
+    cy.get('[name="type"]').select('Helper');
 
     cy.get('#signup-btn').click();
 
@@ -20,6 +27,13 @@ describe('Handy Helper Tests', () => {
   })
   // Log In
   it('Logs into an Account', () => {
+
+    /*
+    Log in with valid credentials
+    Log in with invalid credentials
+    Check for presence of JWT 
+    */
+
     cy.visit('127.0.0.1:3000');
 
     cy.contains('Log In').click();
@@ -50,4 +64,18 @@ describe('Handy Helper Tests', () => {
 
     cy.contains('Log In').should('be.visible');
   })
+
+  // Identify as helper or customer
+    // Identify as helper
+    // Identify as customer
+    // Try to check both 
+
+  // Label Profile from Array of Skill
+    // Select skill from given selection
+    // Choose at least one skill
+    // Try to choose skill as a customer
+
+  // Input experience in a text field 
+    // Require insertion of experience into form
+    // Try to insert experience as a user
 })
