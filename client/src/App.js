@@ -10,6 +10,7 @@ import NavBar from './components/navbar';
 import Index from './components/indexPage';
 import SignUp from './components/SignUp';
 import Settings from './components/Settings';
+import BuildProfile from './components/buildProfilePage';
 
 function App({store}){
 
@@ -25,6 +26,7 @@ function App({store}){
               <Route exact path='/' component={Index} />
               <Route exact path='/signup' component={SignUp} />
               <Route exact path='/settings' component={Settings} />
+              <Route exact path='/buildprofile' component={BuildProfile} />
 
               <Route component={NotFound} />
             </Switch>

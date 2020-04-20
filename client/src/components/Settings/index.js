@@ -35,7 +35,7 @@ export default class Settings extends React.Component {
       lastName: this.state.lName,
       phone: this.state.phone,
       location: this.state.location,
-      skil: this.state.skill
+      skill: this.state.skill
 		}
 		const response = await Ajax.updateUser(data);
     if (response.Error) {
