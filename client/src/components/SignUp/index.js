@@ -72,17 +72,28 @@ export default class SignUp extends React.Component {
       phone: this.state.phone,
       location: this.state.location,
       isHelper: this.state.type === 'Helper'
-		}
-    const response = await Ajax.createUser(data);
-
-    if (response.Error) {
-      window.alert('Email already registered to an account.');
+    }
+    
+    let allFilled = true;
+    for (let field in data) {
+      if (!data[field] && field !== 'isHelper') {
+        allFilled = false;
+      }
+    }
+    if (!allFilled) {
+      window.alert('All fields must be filled.');
     } else {
-      const loginResponse = await Ajax.userLogin(data);
-      localStorage.setItem('handy_helper_token', loginResponse.token);
-      this.setState({
-        loggedIn: true
-      });
+      const response = await Ajax.createUser(data);
+  
+      if (response.Error) {
+        window.alert('Email already registered to an account.');
+      } else {
+        const loginResponse = await Ajax.userLogin(data);
+        localStorage.setItem('handy_helper_token', loginResponse.token);
+        this.setState({
+          loggedIn: true
+        });
+      }
     }
   }
 
