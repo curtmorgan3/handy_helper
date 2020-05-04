@@ -11,6 +11,7 @@ import Index from './components/indexPage';
 import SignUp from './components/SignUp';
 import Settings from './components/Settings';
 import BuildProfile from './components/buildProfilePage';
+import ViewProfile from './components/ViewProfile';
 
 function App({store}){
 
@@ -27,6 +28,7 @@ function App({store}){
               <Route exact path='/signup' component={SignUp} />
               <Route exact path='/settings' component={Settings} />
               <Route exact path='/buildprofile' component={BuildProfile} />
+              <Route exact path='/profile' component={ViewProfile} />
 
               <Route component={NotFound} />
             </Switch>

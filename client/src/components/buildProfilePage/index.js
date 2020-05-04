@@ -1,6 +1,7 @@
 import React from 'react';
 import Ajax from '../../Ajax.js';
 import { connect } from 'react-redux';
+import { setCurrentUser } from '../../redux/actions.js';
 import { Alert, Form, Button } from 'react-bootstrap';
 import './style.scss';
 
@@ -10,7 +11,9 @@ const mapStateToProps = (state) => {
   }
 }
 const mapDispatchToProps = (dispatch) => {
-  return {}
+	return {
+		setCurrentUser: (user) => dispatch(setCurrentUser(user))
+	}
 }
 
 export default class BuildProfile extends React.Component {
@@ -27,9 +30,12 @@ export default class BuildProfile extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount(){
-    const [skills, description] = this.props.currentUser.user?.skill.split('#');
-    this.setState({
+  async componentDidMount(){
+    const [skills, description] = this.props.currentUser.user && this.props.currentUser.user.skill 
+        ? this.props.currentUser.user.skill.split('#') 
+        : ['', ''];
+
+    await this.setState({
       location: this.props.currentUser.user?.location,
       experience: description,
       skill: skills
@@ -58,6 +64,7 @@ export default class BuildProfile extends React.Component {
         experience: '',
         skill: ''
       });
+      this.props.setCurrentUser(response.user);
     }
   }
 

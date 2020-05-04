@@ -79,3 +79,186 @@ describe('Handy Helper Tests', () => {
     // Require insertion of experience into form
     // Try to insert experience as a user
 })
+
+describe.only('Register for an Account', () => {
+  it('Signs up with new email.', () => {
+
+    // cy.exec('node ~/documents/pace/project/handy_helper/server/resetDB.js');
+    // cy.exec('node ~/documents/pace/project/handy_helper/server/seed.js');
+    // cy.exec('node ~/documents/pace/project/handy_helper/server/server.js');
+
+    cy.visit('127.0.0.1:3000');
+
+    cy.contains('Sign Up').click();
+
+    cy.url().should('contain', '/signup');
+
+    cy.get('#login-email').type('testemail@gmail.com');
+    cy.get('#login-pw').type('password');
+    cy.get('[name="fName"]').type('Curt');
+    cy.get('[name="lName"]').type('Morgan');
+    cy.get('[name="phone"]').type('999-999-9999');
+    cy.get('[name="location"]').type('New York');
+    cy.get('[name="type"]').select('Helper');
+
+    cy.get('#signup-btn').click();
+
+    cy.contains('Profile').should('be.visible');
+  })
+
+  it('Signs up with an existing email.', () => {
+
+    cy.visit('127.0.0.1:3000');
+
+    cy.contains('Sign Up').click();
+
+    cy.url().should('contain', '/signup');
+
+    cy.get('#login-email').type('testemail@gmail.com');
+    cy.get('#login-pw').type('password');
+    cy.get('[name="fName"]').type('Curt');
+    cy.get('[name="lName"]').type('Morgan');
+    cy.get('[name="phone"]').type('999-999-9999');
+    cy.get('[name="location"]').type('New York');
+    cy.get('[name="type"]').select('Helper');
+
+    cy.get('#signup-btn').click();
+
+    cy.on('window:alert', (msg) => {
+      expect(msg).to.equal('Email already registered to an account.');
+    });
+
+  })
+
+  it('Doesnt fill in email.', () => {
+
+    cy.visit('127.0.0.1:3000');
+
+    cy.contains('Sign Up').click();
+
+    cy.url().should('contain', '/signup');
+
+    cy.get('#login-pw').type('password');
+    cy.get('[name="fName"]').type('Curt');
+    cy.get('[name="lName"]').type('Morgan');
+    cy.get('[name="phone"]').type('999-999-9999');
+    cy.get('[name="location"]').type('New York');
+    cy.get('[name="type"]').select('Helper');
+
+    cy.get('#signup-btn').click();
+
+    cy.on('window:alert', (msg) => {
+      expect(msg).to.equal('Cannot leave any fields blank');
+    });
+  })
+
+  it('Doesnt fill in first name.', () => {
+
+    cy.visit('127.0.0.1:3000');
+
+    cy.contains('Sign Up').click();
+
+    cy.url().should('contain', '/signup');
+
+    cy.get('#login-email').type('testemail@gmail.com');
+    cy.get('#login-pw').type('password');
+    cy.get('[name="lName"]').type('Morgan');
+    cy.get('[name="phone"]').type('999-999-9999');
+    cy.get('[name="location"]').type('New York');
+    cy.get('[name="type"]').select('Helper');
+
+    cy.get('#signup-btn').click();
+
+    cy.on('window:alert', (msg) => {
+      expect(msg).to.equal('Cannot leave any fields blank');
+    });
+  })
+
+  it('Doesnt fill in last name.', () => {
+
+    cy.visit('127.0.0.1:3000');
+
+    cy.contains('Sign Up').click();
+
+    cy.url().should('contain', '/signup');
+
+    cy.get('#login-email').type('testemail@gmail.com');
+    cy.get('#login-pw').type('password');
+    cy.get('[name="fName"]').type('Curt');
+    cy.get('[name="phone"]').type('999-999-9999');
+    cy.get('[name="location"]').type('New York');
+    cy.get('[name="type"]').select('Helper');
+
+    cy.get('#signup-btn').click();
+
+    cy.on('window:alert', (msg) => {
+      expect(msg).to.equal('Cannot leave any fields blank');
+    });
+  })
+
+  it('Doesnt fill in phone number.', () => {
+
+    cy.visit('127.0.0.1:3000');
+
+    cy.contains('Sign Up').click();
+
+    cy.url().should('contain', '/signup');
+
+    cy.get('#login-email').type('testemail@gmail.com');
+    cy.get('#login-pw').type('password');
+    cy.get('[name="fName"]').type('Curt');
+    cy.get('[name="lName"]').type('Morgan');
+    cy.get('[name="location"]').type('New York');
+    cy.get('[name="type"]').select('Helper');
+
+    cy.get('#signup-btn').click();
+
+    cy.on('window:alert', (msg) => {
+      expect(msg).to.equal('Cannot leave any fields blank');
+    });
+  })
+
+  it('Doesnt fill in a location.', () => {
+
+    cy.visit('127.0.0.1:3000');
+
+    cy.contains('Sign Up').click();
+
+    cy.url().should('contain', '/signup');
+
+    cy.get('#login-email').type('testemail@gmail.com');
+    cy.get('#login-pw').type('password');
+    cy.get('[name="fName"]').type('Curt');
+    cy.get('[name="lName"]').type('Morgan');
+    cy.get('[name="phone"]').type('999-999-9999');
+    cy.get('[name="type"]').select('Helper');
+
+    cy.get('#signup-btn').click();
+
+    cy.on('window:alert', (msg) => {
+      expect(msg).to.equal('Cannot leave any fields blank');
+    });
+  })
+
+  it('Doesnt fill in a password.', () => {
+
+    cy.visit('127.0.0.1:3000');
+
+    cy.contains('Sign Up').click();
+
+    cy.url().should('contain', '/signup');
+
+    cy.get('#login-email').type('testemail@gmail.com');
+    cy.get('[name="fName"]').type('Curt');
+    cy.get('[name="lName"]').type('Morgan');
+    cy.get('[name="phone"]').type('999-999-9999');
+    cy.get('[name="location"]').type('New York');
+    cy.get('[name="type"]').select('Helper');
+
+    cy.get('#signup-btn').click();
+
+    cy.on('window:alert', (msg) => {
+      expect(msg).to.equal('Cannot leave any fields blank');
+    });
+  })
+})

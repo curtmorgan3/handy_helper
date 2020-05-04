@@ -74,7 +74,7 @@ userRouter.put('/', passport.authenticate('jwt', { session: false }), async (req
 			phone
 		});
 		user.save();
-		res.json({msg: `User ${user.email} updated`});
+		res.json({user, msg: `User ${user.email} updated`});
 	}catch(e){
 		res.json({Error: `${e}`})
 	}

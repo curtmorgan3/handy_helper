@@ -81,7 +81,7 @@ export default class SignUp extends React.Component {
       }
     }
     if (!allFilled) {
-      window.alert('All fields must be filled.');
+      window.alert('Cannot leave any fields blank');
     } else {
       const response = await Ajax.createUser(data);
   
