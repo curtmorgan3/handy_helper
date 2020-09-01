@@ -10,7 +10,7 @@ import NavBar from './components/navbar';
 import Index from './components/indexPage';
 import SignUp from './components/SignUp';
 import Settings from './components/Settings';
-import BuildProfile from './components/buildProfilePage';
+import BuildProfile from './components/buildProfile';
 import ViewProfile from './components/ViewProfile';
 
 function App({store}){
@@ -21,7 +21,7 @@ function App({store}){
       <Router>
         <ScrollToTop>
           <NavBar />
-          <div className="main">
+          <div className="main" style={{height: '100vh', width: '100vw'}}>
 
             <Switch>
               <Route exact path='/' component={Index} />
