@@ -10,7 +10,7 @@ import NavBar from './components/navbar';
 import Index from './components/indexPage';
 import SignUp from './components/SignUp';
 import Settings from './components/Settings';
-import BuildProfile from './components/buildProfile';
+import BuildProfile from './components/BuildProfile';
 import ViewProfile from './components/ViewProfile';
 
 function App({store}){
