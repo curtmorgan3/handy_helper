@@ -19,7 +19,8 @@ const User = sequelize.define('user', {
 	phone: Sequelize.STRING,
 	isActive: Sequelize.BOOLEAN,
 	isHelper: Sequelize.BOOLEAN,
-	skill: Sequelize.STRING,
+	skill: Sequelize.TEXT,
+	experience: Sequelize.TEXT,
 	averageRating: Sequelize.INTEGER,
 	location: Sequelize.STRING
 });
