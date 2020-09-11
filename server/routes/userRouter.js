@@ -84,7 +84,7 @@ userRouter.put('/', passport.authenticate('jwt', { session: false }), async (req
 // Delete Current User
 userRouter.delete('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
 	try{
-		let user = await User.findOne({where: {id: req.body.id}});
+		const user = await User.findOne({where: {id: req.user.id}});
 		await user.destroy();
 		res.json({msg: `User ${user.username} destroyed.`})
 	}catch (e){
