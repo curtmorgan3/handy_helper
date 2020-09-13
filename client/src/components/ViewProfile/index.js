@@ -1,12 +1,25 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import './style.scss';
+import { makeStyles } from '@material-ui/core/styles';
+
+const styles = {
+  profileContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '80vw',
+    height: '100%',
+  },
+}
 
 const ViewProfile = () => {
   // Redux Store
   const currentUser = useSelector(state => state.user.currentUser.user);
   //////////////
+  const useStyles = makeStyles(styles);
+  const classes = useStyles();
 
   if (!currentUser) {
     return (
@@ -15,7 +28,7 @@ const ViewProfile = () => {
   }
 
   return (
-    <div className="profile-container">
+    <div className={classes.profileContainer}>
       <h1>My Profile</h1>
 
       <h3>{currentUser.firstName} {currentUser.lastName}</h3>
