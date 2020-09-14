@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import { Button, FormControlLabel, Checkbox, Radio, RadioGroup, FormControl } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const styles = {
@@ -19,13 +19,20 @@ const styles = {
     padding: '2%',
     marginBottom: '10px',
   },
+  buttonContainer: {
+    display: 'flex',
+  },
   button: {
     textTransform: 'none',
     width: '45%',
     height: '50px',
     backgroundColor: '#0069D9',
     color: '#ffffff',
-    marginTop: '15px',
+    marginTop: '5px',
+    marginRight: '15px',
+  },
+  p: {
+    marginBottom: '0px',
   },
 }
 
@@ -68,8 +75,7 @@ const ViewProfile = () => {
       </div>
 
       <div className={classes.infoContainer}>
-        <h2>Account Management</h2>
-        <h3>Preferences</h3>
+        <h2>Account Settings</h2>
         <h3>Change Password</h3>
         <form>
           <label htmlFor='name'>Old Password</label><br />
@@ -80,13 +86,34 @@ const ViewProfile = () => {
         <div>
           <Button className={classes.button}>Reset Password</Button>
         </div>
-
         <h3>Transactions</h3>
+        <div className="buttonContainer">
+          <Button className={classes.button}>Booking History</Button>
+          <Button className={classes.button}>Income Statements</Button>
+        </div>
+        <h3>Email Notifications</h3>
+        <FormControl component="fieldset">
+          <RadioGroup aria-label="emailNotifications" name="emailNotifications" value={"transactions"} onChange={handleChange}>
+            <FormControlLabel value="news" control={<Radio />} label="News and updates" />
+            <FormControlLabel value="deals" control={<Radio />} label="Deals" />
+            <FormControlLabel value="transactions" control={<Radio />} label="Transactions" />
+          </RadioGroup>
+        </FormControl>
         <h3>Deactivate Account</h3>
+        <FormControlLabel
+          control={<Checkbox checked={false} onChange={handleChange} name="accountDeactivated" />}
+          label="Deactivate Account"
+        />
       </div>
 
       <div className={classes.infoContainer}>
         <h2>Customer Support</h2>
+        <p className={classes.p}><b>Phone</b></p>
+        <p>(333)333-3333</p>
+        <p className={classes.p}><b>Hours of Operation</b></p>
+        <p>9 AM - 5 PM EST</p>
+        <p className={classes.p}><b>Email</b></p>
+        <p>info@handyhelper.com</p>
       </div>
 
     </div>
