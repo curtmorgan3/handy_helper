@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { Button, FormControlLabel, Checkbox, Radio, RadioGroup, FormControl } from '@material-ui/core';
+import { Button, FormControlLabel, Checkbox, FormGroup, FormControl } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const styles = {
@@ -24,15 +24,19 @@ const styles = {
   },
   button: {
     textTransform: 'none',
-    width: '45%',
+    width: '20%',
     height: '50px',
     backgroundColor: '#0069D9',
     color: '#ffffff',
-    marginTop: '5px',
+    marginTop: '10px',
+    marginBottom: '15px',
     marginRight: '15px',
   },
   p: {
     marginBottom: '0px',
+  },
+  passwordInfo: {
+    color: 'red',
   },
 }
 
@@ -40,17 +44,53 @@ const ViewProfile = () => {
   // Redux Store
   const currentUser = useSelector(state => state.user.currentUser.user);
   //////////////
+  const [accountActive, setAccountActive] = React.useState(true);
+  const [notificationSettings, setNotifications] = React.useState({
+    transactions: true,
+    news: true,
+    deals: true,
+  });
+  const [basicInformation, setBasicInformation] = React.useState({
+    firstName: currentUser ? currentUser.firstName : null,
+    lastName: currentUser ? currentUser.lastName : null,
+    location: currentUser ? currentUser.location : null,
+    phone: currentUser ? currentUser.phone : null,
+    skill: currentUser ? currentUser.skill : null,
+  });
+  const [password, setPassword] = React.useState({
+    newPassword: '',
+    repeatedPassword: ''
+  });
   const useStyles = makeStyles(styles);
   const classes = useStyles();
+
+  const handleNotificationChange = (e) => {
+    setNotifications({ ...notificationSettings, [e.target.name]: e.target.checked });
+  }
+
+  const handleInfoChange = (e) => {
+    setBasicInformation({ ...basicInformation, [e.target.name]: e.target.value });
+  }
+
+  const handlePasswordChange = (e) => {
+    setPassword({ ...password, [e.target.name]: e.target.value });
+  }
+
+  const resetPassword = () => {
+    const match = password.newPassword === password.repeatedPassword;
+    if (match) {
+      // TODO add backend call
+    }
+  }
+
+  const handleSave = () => {
+    // TODO add backend call
+  }
 
   if (!currentUser) {
     return (
       <Redirect to='/' />
     )
-  }
-
-  const handleChange = (e) => {
-    // TODO
   }
 
   return (
@@ -59,33 +99,35 @@ const ViewProfile = () => {
       <div className={classes.infoContainer}>
         <h2>Basic Information</h2>
         <form>
-          <label htmlFor='name'>Name</label><br />
-          <input type='text' name='name' id='name' value={currentUser.firstName + ' ' + currentUser.lastName} onChange={handleChange} /><br />
+          <label htmlFor='firstName'>Name</label><br />
+          <input type='text' name='firstName' id='firstName' value={basicInformation.firstName} onChange={handleInfoChange} /><br />
+          <label htmlFor='lastName'>Name</label><br />
+          <input type='text' name='lastName' id='lastName' value={basicInformation.lastName} onChange={handleInfoChange} /><br />
           <label htmlFor='name'>Location</label><br />
-          <input type='text' name='location' id='location' value={currentUser.location} onChange={handleChange} /><br />
+          <input type='text' name='location' id='location' value={basicInformation.location} onChange={handleInfoChange} /><br />
           <label htmlFor='name'>Phone Number</label><br />
-          <input type='text' name='phone' id='phone' value={currentUser.phone} onChange={handleChange} /><br />
+          <input type='text' name='phone' id='phone' value={basicInformation.phone} onChange={handleInfoChange} /><br />
           {currentUser.isHelper ?
             <div>
               <label htmlFor='name'>Skill</label><br />
-              <input type='text' name='skill' id='skill' value={currentUser.skill} onChange={handleChange} /><br />
+              <input type='text' name='skill' id='skill' value={basicInformation.skill} onChange={handleInfoChange} /><br />
             </div> : null
           }
         </form>
+        <Button className={classes.button} onClick={handleSave}>Save</Button>
       </div>
 
       <div className={classes.infoContainer}>
         <h2>Account Settings</h2>
         <h3>Change Password</h3>
         <form>
-          <label htmlFor='name'>Old Password</label><br />
-          <input type='text' name='oldPassword' id='oldPassword' value='' onChange={handleChange} /><br />
           <label htmlFor='name'>New Password</label><br />
-          <input type='text' name='newPassword' id='newPassword' value='' onChange={handleChange} /><br />
+          <input type='password' name='newPassword' id='newPassword' value={password.newPassword} onChange={handlePasswordChange} /><br />
+          <label htmlFor='name'>Confirm new Password</label><br />
+          <input type='password' name='repeatedPassword' id='repeatedPassword' value={password.repeatedPassword} onChange={handlePasswordChange} /><br />
         </form>
-        <div>
-          <Button className={classes.button}>Reset Password</Button>
-        </div>
+        {password.newPassword === password.repeatedPassword ? null : <p className={classes.passwordInfo}>Passwords don't match</p>}
+        <Button className={classes.button} onClick={resetPassword}>Reset Password</Button>
         <h3>Transactions</h3>
         <div className="buttonContainer">
           <Button className={classes.button}>Booking History</Button>
@@ -93,17 +135,27 @@ const ViewProfile = () => {
         </div>
         <h3>Email Notifications</h3>
         <FormControl component="fieldset">
-          <RadioGroup aria-label="emailNotifications" name="emailNotifications" value={"transactions"} onChange={handleChange}>
-            <FormControlLabel value="news" control={<Radio />} label="News and updates" />
-            <FormControlLabel value="deals" control={<Radio />} label="Deals" />
-            <FormControlLabel value="transactions" control={<Radio />} label="Transactions" />
-          </RadioGroup>
+          <FormGroup>
+            <FormControlLabel
+              control={<Checkbox checked={notificationSettings.transactions} onChange={handleNotificationChange} name="transactions" />}
+              label="Transactions"
+            />
+            <FormControlLabel
+              control={<Checkbox checked={notificationSettings.news} onChange={handleNotificationChange} name="news" />}
+              label="News and Updates"
+            />
+            <FormControlLabel
+              control={<Checkbox checked={notificationSettings.deals} onChange={handleNotificationChange} name="deals" />}
+              label="Deals"
+            />
+          </FormGroup>
         </FormControl>
         <h3>Deactivate Account</h3>
         <FormControlLabel
-          control={<Checkbox checked={false} onChange={handleChange} name="accountDeactivated" />}
+          control={<Checkbox checked={!accountActive} onChange={() => setAccountActive(!accountActive)} name="deactivateAccount" />}
           label="Deactivate Account"
-        />
+        /> <br />
+        <Button className={classes.button} onClick={handleSave}>Save</Button>
       </div>
 
       <div className={classes.infoContainer}>
