@@ -66,8 +66,6 @@ let ViewProfile = (props) => {
     password: '',
     passwordConfirm: ''
   });
-  const useStyles = makeStyles(styles);
-  const classes = useStyles();
   const [basicInformation, setBasicInformation] = React.useState({
     firstName: user ? user.firstName : null,
     lastName: user ? user.lastName : null,
@@ -77,6 +75,8 @@ let ViewProfile = (props) => {
     skill: user ? user.skill : null,
     isActive: user ? user.isActive : null,
   });
+  const useStyles = makeStyles(styles);
+  const classes = useStyles();
 
   if (!user) {
     return (
