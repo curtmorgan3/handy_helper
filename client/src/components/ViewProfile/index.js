@@ -1,6 +1,8 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { setCurrentUser } from '../../redux/actions';
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import Ajax from '../../Ajax';
 import { Button, FormControlLabel, Checkbox, FormGroup, FormControl } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -18,9 +20,6 @@ const styles = {
     borderRadius: '15px',
     padding: '2%',
     marginBottom: '10px',
-  },
-  buttonContainer: {
-    display: 'flex',
   },
   button: {
     textTransform: 'none',
@@ -40,22 +39,25 @@ const styles = {
   },
 }
 
-const ViewProfile = () => {
-  // Redux Store
-  const currentUser = useSelector(state => state.user.currentUser.user);
-  //////////////
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.user.currentUser
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setCurrentUser: (user) => dispatch(setCurrentUser(user))
+  }
+}
+
+let ViewProfile = (props) => {
+  const { currentUser: { user } } = props;
   const [accountActive, setAccountActive] = React.useState(true);
   const [notificationSettings, setNotifications] = React.useState({
     transactions: true,
     news: true,
     deals: true,
-  });
-  const [basicInformation, setBasicInformation] = React.useState({
-    firstName: currentUser ? currentUser.firstName : null,
-    lastName: currentUser ? currentUser.lastName : null,
-    location: currentUser ? currentUser.location : null,
-    phone: currentUser ? currentUser.phone : null,
-    skill: currentUser ? currentUser.skill : null,
   });
   const [password, setPassword] = React.useState({
     newPassword: '',
@@ -63,6 +65,19 @@ const ViewProfile = () => {
   });
   const useStyles = makeStyles(styles);
   const classes = useStyles();
+  const [basicInformation, setBasicInformation] = React.useState({
+    firstName: user ? user.firstName : null,
+    lastName: user ? user.lastName : null,
+    location: user ? user.location : null,
+    phone: user ? user.phone : null,
+    skill: user ? user.skill : null,
+  });
+
+  if (!user) {
+    return (
+      <Redirect to='/' />
+    )
+  }
 
   const handleNotificationChange = (e) => {
     setNotifications({ ...notificationSettings, [e.target.name]: e.target.checked });
@@ -83,38 +98,44 @@ const ViewProfile = () => {
     }
   }
 
-  const handleSave = () => {
-    // TODO add backend call
-  }
-
-  if (!currentUser) {
-    return (
-      <Redirect to='/' />
-    )
+  const handleSave = async (type) => {
+    const updatedUser = {...user};
+    if(type==='info'){
+      updatedUser.firstName = basicInformation.firstName;
+      updatedUser.lastName = basicInformation.lastName;
+      updatedUser.location = basicInformation.location;
+      updatedUser.phone = basicInformation.phone;
+      updatedUser.skill = basicInformation.skill;
+      const res = await Ajax.updateUser(updatedUser);
+      props.setCurrentUser(res.user);
+    } else if (type==='account'){
+      // TODO
+    }
   }
 
   return (
     <div className={classes.profileContainer}>
       <h1>My Profile</h1>
+
       <div className={classes.infoContainer}>
         <h2>Basic Information</h2>
         <form>
-          <label htmlFor='firstName'>Name</label><br />
+          <label htmlFor='firstName'>First name</label><br />
           <input type='text' name='firstName' id='firstName' value={basicInformation.firstName} onChange={handleInfoChange} /><br />
-          <label htmlFor='lastName'>Name</label><br />
+          <label htmlFor='lastName'>Last name</label><br />
           <input type='text' name='lastName' id='lastName' value={basicInformation.lastName} onChange={handleInfoChange} /><br />
           <label htmlFor='name'>Location</label><br />
           <input type='text' name='location' id='location' value={basicInformation.location} onChange={handleInfoChange} /><br />
           <label htmlFor='name'>Phone Number</label><br />
           <input type='text' name='phone' id='phone' value={basicInformation.phone} onChange={handleInfoChange} /><br />
-          {currentUser.isHelper ?
+          {user && user.isHelper ?
             <div>
               <label htmlFor='name'>Skill</label><br />
               <input type='text' name='skill' id='skill' value={basicInformation.skill} onChange={handleInfoChange} /><br />
             </div> : null
           }
         </form>
-        <Button className={classes.button} onClick={handleSave}>Save</Button>
+        <Button className={classes.button} onClick={() => handleSave('info')}>Save</Button>
       </div>
 
       <div className={classes.infoContainer}>
@@ -129,33 +150,33 @@ const ViewProfile = () => {
         {password.newPassword === password.repeatedPassword ? null : <p className={classes.passwordInfo}>Passwords don't match</p>}
         <Button className={classes.button} onClick={resetPassword}>Reset Password</Button>
         <h3>Transactions</h3>
-        <div className="buttonContainer">
+        <div>
           <Button className={classes.button}>Booking History</Button>
           <Button className={classes.button}>Income Statements</Button>
         </div>
         <h3>Email Notifications</h3>
-        <FormControl component="fieldset">
+        <FormControl component='fieldset'>
           <FormGroup>
             <FormControlLabel
-              control={<Checkbox checked={notificationSettings.transactions} onChange={handleNotificationChange} name="transactions" />}
-              label="Transactions"
+              control={<Checkbox checked={notificationSettings.transactions} onChange={handleNotificationChange} name='transactions' />}
+              label='Transactions'
             />
             <FormControlLabel
-              control={<Checkbox checked={notificationSettings.news} onChange={handleNotificationChange} name="news" />}
-              label="News and Updates"
+              control={<Checkbox checked={notificationSettings.news} onChange={handleNotificationChange} name='news' />}
+              label='News and Updates'
             />
             <FormControlLabel
-              control={<Checkbox checked={notificationSettings.deals} onChange={handleNotificationChange} name="deals" />}
-              label="Deals"
+              control={<Checkbox checked={notificationSettings.deals} onChange={handleNotificationChange} name='deals' />}
+              label='Deals'
             />
           </FormGroup>
         </FormControl>
         <h3>Deactivate Account</h3>
         <FormControlLabel
-          control={<Checkbox checked={!accountActive} onChange={() => setAccountActive(!accountActive)} name="deactivateAccount" />}
-          label="Deactivate Account"
+          control={<Checkbox checked={!accountActive} onChange={() => setAccountActive(!accountActive)} name='deactivateAccount' />}
+          label='Deactivate Account'
         /> <br />
-        <Button className={classes.button} onClick={handleSave}>Save</Button>
+        <Button className={classes.button} onClick={() => handleSave('account')}>Save</Button>
       </div>
 
       <div className={classes.infoContainer}>
@@ -172,4 +193,5 @@ const ViewProfile = () => {
   )
 }
 
+ViewProfile = connect(mapStateToProps, mapDispatchToProps)(ViewProfile);
 export default ViewProfile;
