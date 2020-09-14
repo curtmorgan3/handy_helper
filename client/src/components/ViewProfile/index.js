@@ -70,6 +70,7 @@ let ViewProfile = (props) => {
     lastName: user ? user.lastName : null,
     location: user ? user.location : null,
     phone: user ? user.phone : null,
+    email: user ? user.email : null,
     skill: user ? user.skill : null,
   });
 
@@ -99,13 +100,8 @@ let ViewProfile = (props) => {
   }
 
   const handleSave = async (type) => {
-    const updatedUser = {...user};
     if(type==='info'){
-      updatedUser.firstName = basicInformation.firstName;
-      updatedUser.lastName = basicInformation.lastName;
-      updatedUser.location = basicInformation.location;
-      updatedUser.phone = basicInformation.phone;
-      updatedUser.skill = basicInformation.skill;
+      const updatedUser = {...user, ...basicInformation};
       const res = await Ajax.updateUser(updatedUser);
       props.setCurrentUser(res.user);
     } else if (type==='account'){
@@ -128,6 +124,8 @@ let ViewProfile = (props) => {
           <input type='text' name='location' id='location' value={basicInformation.location} onChange={handleInfoChange} /><br />
           <label htmlFor='name'>Phone Number</label><br />
           <input type='text' name='phone' id='phone' value={basicInformation.phone} onChange={handleInfoChange} /><br />
+          <label htmlFor='name'>Email</label><br />
+          <input type='text' name='email' id='email' value={basicInformation.email} onChange={handleInfoChange} /><br />
           {user && user.isHelper ?
             <div>
               <label htmlFor='name'>Skill</label><br />
