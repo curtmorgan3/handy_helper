@@ -56,7 +56,6 @@ const mapDispatchToProps = (dispatch) => {
 
 let ViewProfile = (props) => {
   const { currentUser: { user } } = props;
-  const [accountActive, setAccountActive] = React.useState(true);
   const [passwordUpdated, setPasswordUpdated] = React.useState(false);
   const [notificationSettings, setNotifications] = React.useState({
     transactions: true,
@@ -76,6 +75,7 @@ let ViewProfile = (props) => {
     phone: user ? user.phone : null,
     email: user ? user.email : null,
     skill: user ? user.skill : null,
+    isActive: user ? user.isActive : null,
   });
 
   if (!user) {
@@ -89,12 +89,15 @@ let ViewProfile = (props) => {
   }
 
   const handleInfoChange = (e) => {
-    setBasicInformation({ ...basicInformation, [e.target.name]: e.target.value });
+    if (e.target.name === 'isActive') {
+      setBasicInformation({ ...basicInformation, [e.target.name]: e.target.checked });
+    } else {
+      setBasicInformation({ ...basicInformation, [e.target.name]: e.target.value });
+    }
   }
 
   const handlePasswordChange = (e) => {
     setPassword({ ...password, [e.target.name]: e.target.value });
-    console.log(password);
   }
 
   const handleSave = async (type) => {
@@ -106,11 +109,9 @@ let ViewProfile = (props) => {
       } else {
         props.setCurrentUser(res.user);
       }
-    } else if (type === 'account') {
-      // TODO
     } else if (type === 'password') {
       if (password.password === password.passwordConfirm) {
-        const updatedUser = { ...user, password: password.password};
+        const updatedUser = { ...user, password: password.password };
         const res = await Ajax.updateUser(updatedUser);
         if (res.Error) {
           console.error(res);
@@ -159,7 +160,7 @@ let ViewProfile = (props) => {
           <input type='password' name='passwordConfirm' id='passwordConfirm' value={password.passwordConfirm} onChange={handlePasswordChange} /><br />
         </form>
         {password.password === password.passwordConfirm ? null : <p className={classes.passwordAlert}>Passwords don't match</p>}
-        {passwordUpdated ? <p className={classes.passwordSuccess}>Passwords was updated!</p> : null } 
+        {passwordUpdated ? <p className={classes.passwordSuccess}>Passwords was updated!</p> : null}
         <Button className={classes.button} onClick={() => handleSave('password')}>Reset Password</Button>
         <h3>Transactions</h3>
         <div>
@@ -185,10 +186,10 @@ let ViewProfile = (props) => {
         </FormControl>
         <h3>Deactivate Account</h3>
         <FormControlLabel
-          control={<Checkbox checked={!accountActive} onChange={() => setAccountActive(!accountActive)} name='deactivateAccount' />}
-          label='Deactivate Account'
+          control={<Checkbox checked={basicInformation.isActive} onChange={handleInfoChange} name='isActive' />}
+          label='Account Active'
         /> <br />
-        <Button className={classes.button} onClick={() => handleSave('account')}>Save</Button>
+        <Button className={classes.button} onClick={() => handleSave('info')}>Save</Button>
       </div>
 
       <div className={classes.infoContainer}>
