@@ -34,8 +34,11 @@ const styles = {
   p: {
     marginBottom: '0px',
   },
-  passwordInfo: {
+  passwordAlert: {
     color: 'red',
+  },
+  passwordSuccess: {
+    color: 'green',
   },
 }
 
@@ -54,14 +57,15 @@ const mapDispatchToProps = (dispatch) => {
 let ViewProfile = (props) => {
   const { currentUser: { user } } = props;
   const [accountActive, setAccountActive] = React.useState(true);
+  const [passwordUpdated, setPasswordUpdated] = React.useState(false);
   const [notificationSettings, setNotifications] = React.useState({
     transactions: true,
     news: true,
     deals: true,
   });
   const [password, setPassword] = React.useState({
-    newPassword: '',
-    repeatedPassword: ''
+    password: '',
+    passwordConfirm: ''
   });
   const useStyles = makeStyles(styles);
   const classes = useStyles();
@@ -90,22 +94,31 @@ let ViewProfile = (props) => {
 
   const handlePasswordChange = (e) => {
     setPassword({ ...password, [e.target.name]: e.target.value });
-  }
-
-  const resetPassword = () => {
-    const match = password.newPassword === password.repeatedPassword;
-    if (match) {
-      // TODO add backend call
-    }
+    console.log(password);
   }
 
   const handleSave = async (type) => {
-    if(type==='info'){
-      const updatedUser = {...user, ...basicInformation};
+    if (type === 'info') {
+      const updatedUser = { ...user, ...basicInformation };
       const res = await Ajax.updateUser(updatedUser);
-      props.setCurrentUser(res.user);
-    } else if (type==='account'){
+      if (res.Error) {
+        console.error(res);
+      } else {
+        props.setCurrentUser(res.user);
+      }
+    } else if (type === 'account') {
       // TODO
+    } else if (type === 'password') {
+      if (password.password === password.passwordConfirm) {
+        const updatedUser = { ...user, password: password.password};
+        const res = await Ajax.updateUser(updatedUser);
+        if (res.Error) {
+          console.error(res);
+        } else {
+          setPasswordUpdated(true);
+          props.setCurrentUser(res.user);
+        }
+      }
     }
   }
 
@@ -141,12 +154,13 @@ let ViewProfile = (props) => {
         <h3>Change Password</h3>
         <form>
           <label htmlFor='name'>New Password</label><br />
-          <input type='password' name='newPassword' id='newPassword' value={password.newPassword} onChange={handlePasswordChange} /><br />
+          <input type='password' name='password' id='password' value={password.password} onChange={handlePasswordChange} /><br />
           <label htmlFor='name'>Confirm new Password</label><br />
-          <input type='password' name='repeatedPassword' id='repeatedPassword' value={password.repeatedPassword} onChange={handlePasswordChange} /><br />
+          <input type='password' name='passwordConfirm' id='passwordConfirm' value={password.passwordConfirm} onChange={handlePasswordChange} /><br />
         </form>
-        {password.newPassword === password.repeatedPassword ? null : <p className={classes.passwordInfo}>Passwords don't match</p>}
-        <Button className={classes.button} onClick={resetPassword}>Reset Password</Button>
+        {password.password === password.passwordConfirm ? null : <p className={classes.passwordAlert}>Passwords don't match</p>}
+        {passwordUpdated ? <p className={classes.passwordSuccess}>Passwords was updated!</p> : null } 
+        <Button className={classes.button} onClick={() => handleSave('password')}>Reset Password</Button>
         <h3>Transactions</h3>
         <div>
           <Button className={classes.button}>Booking History</Button>
