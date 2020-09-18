@@ -13,31 +13,36 @@ const SignUp = () => {
 
   // Component State
   const [loggedIn, setLoggedIn] = React.useState(false);
-  const [form, setForm] = React.useState({
+  const [loginForm, setLoginForm] = React.useState({
+    loginEmail: '',
+    loginPassword: '',
+  })
+  const [signUpForm, setSignUpForm] = React.useState({
     email: '',
     password: '',
-    signUpEmail: '',
-    signUpPassword: '',
     firstName: '',
     lastName: '',
     phone: '',
     location: '',
-    type: '',
+    type: 'Customer', // Customer set as default, because this is what is displayed initially in the type dropdown
   })
   ///////////////////
 
   const handleChange = (e) => {
-    const updates = {...form};
-    updates[e.target.name] = e.target.value;
-
-    setForm(form => {
-      return {...form, ...updates}
-    });
+    if(e.target.name==='loginEmail'||e.target.name==='loginPassword'){
+      const updates = {...loginForm};
+      updates[e.target.name] = e.target.value;
+      setLoginForm({...updates});
+    } else {
+      const updates = {...signUpForm};
+      updates[e.target.name] = e.target.value;
+      setSignUpForm({...updates});
+    }
   }
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    const data = {...form};
+    const data = {...signUpForm};
     data.isHelper = data.type === 'Helper';
     
     let allFilled = true;
@@ -61,13 +66,13 @@ const SignUp = () => {
     }
   }
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     const data = {
-			email: form.email,
-			password: form.password
+			email: loginForm.loginEmail,
+			password: loginForm.loginPassword
     }
-    
+
 		const response = await Ajax.userLogin(data);
 		if(response.user){
       dispatch(setCurrentUser(response.user));
@@ -96,33 +101,33 @@ const SignUp = () => {
       <div className='login-form'>
         <Form>
           <Form.Label>Email</Form.Label>
-          <Form.Control id='login-email' name='signUpEmail' value={form.signUpEmail} onChange={handleChange} type='email' />
+          <Form.Control id='login-email' name='loginEmail' value={loginForm.loginEmail} onChange={handleChange} type='email' />
           <Form.Label>Password</Form.Label>
-          <Form.Control id='login-pw' type='password' name='signUpPassword' value={form.signUpPassword} onChange={handleChange}/>
+          <Form.Control id='login-pw' type='password' name='loginPassword' value={loginForm.loginPassword} onChange={handleChange}/>
         </Form>
-        <Button id='login-btn' variant='primary' onClick={handleSubmit}>Login</Button>
+        <Button id='login-btn' variant='primary' onClick={handleLogin}>Login</Button>
         <h3 style={{textAlign: 'center'}}>or</h3>
         <Form>
           <Form.Label>First Name</Form.Label>
-          <Form.Control name='firstName' value={form.firstName} onChange={handleChange} type='text' />
+          <Form.Control name='firstName' value={signUpForm.firstName} onChange={handleChange} type='text' />
 
           <Form.Label>Last Name</Form.Label>
-          <Form.Control name='lastName' value={form.lastName} onChange={handleChange} type='text' />
+          <Form.Control name='lastName' value={signUpForm.lastName} onChange={handleChange} type='text' />
 
           <Form.Label>Email</Form.Label>
-          <Form.Control name='email' value={form.email} onChange={handleChange} type='email' />
+          <Form.Control name='email' value={signUpForm.email} onChange={handleChange} type='email' />
 
           <Form.Label>Password</Form.Label>
-          <Form.Control type='password' name='password' value={form.password} onChange={handleChange}/>
+          <Form.Control type='password' name='password' value={signUpForm.password} onChange={handleChange}/>
 
           <Form.Label>Phone Number</Form.Label>
-          <Form.Control name='phone' value={form.phone} onChange={handleChange} type='text' />
+          <Form.Control name='phone' value={signUpForm.phone} onChange={handleChange} type='text' />
 
           <Form.Label>Location</Form.Label>
-          <Form.Control name='location' value={form.location} onChange={handleChange} type='text' />
+          <Form.Control name='location' value={signUpForm.location} onChange={handleChange} type='text' />
 
           <Form.Label>I am a...</Form.Label>
-          <Form.Control as='select' name='type' value={form.type} onChange={handleChange}>
+          <Form.Control as='select' name='type' value={signUpForm.type} onChange={handleChange}>
             <option>Customer</option>
             <option>Helper</option>
           </Form.Control>
