@@ -7,11 +7,10 @@ import ScrollToTop from './components/Helpers/ScrollToTop';
 import NotFound from './components/Helpers/NotFound';
 
 import NavBar from './components/navbar';
-import Index from './components/indexPage';
+import Index from './components/IndexPage';
 import SignUp from './components/SignUp';
-import Settings from './components/Settings';
+import ManageAccount from './components/ManageAccount';
 import BuildProfile from './components/BuildProfile';
-import ViewProfile from './components/ViewProfile';
 
 function App({store}){
 
@@ -26,9 +25,8 @@ function App({store}){
             <Switch>
               <Route exact path='/' component={Index} />
               <Route exact path='/signup' component={SignUp} />
-              <Route exact path='/settings' component={Settings} />
+              <Route exact path='/settings' component={ManageAccount} />
               <Route exact path='/buildprofile' component={BuildProfile} />
-              <Route exact path='/profile' component={ViewProfile} />
 
               <Route component={NotFound} />
             </Switch>

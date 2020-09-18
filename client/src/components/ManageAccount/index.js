@@ -54,7 +54,7 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-let ViewProfile = (props) => {
+let ManageAccount = (props) => {
   const { currentUser: { user } } = props;
   const [passwordUpdated, setPasswordUpdated] = React.useState(false);
   const [notificationSettings, setNotifications] = React.useState({
@@ -125,7 +125,7 @@ let ViewProfile = (props) => {
 
   return (
     <div className={classes.profileContainer}>
-      <h1>My Profile</h1>
+      <h1>My Account</h1>
 
       <div className={classes.infoContainer}>
         <h2>Basic Information</h2>
@@ -206,5 +206,5 @@ let ViewProfile = (props) => {
   )
 }
 
-ViewProfile = connect(mapStateToProps, mapDispatchToProps)(ViewProfile);
-export default ViewProfile;
+ManageAccount = connect(mapStateToProps, mapDispatchToProps)(ManageAccount);
+export default ManageAccount;
