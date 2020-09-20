@@ -72,7 +72,6 @@ let ManageAccount = (props) => {
     location: user ? user.location : null,
     phone: user ? user.phone : null,
     email: user ? user.email : null,
-    skill: user ? user.skill : null,
     isActive: user ? user.isActive : null,
   });
   const useStyles = makeStyles(styles);
@@ -140,12 +139,6 @@ let ManageAccount = (props) => {
           <input type='text' name='phone' id='phone' value={basicInformation.phone} onChange={handleInfoChange} /><br />
           <label htmlFor='name'>Email</label><br />
           <input type='text' name='email' id='email' value={basicInformation.email} onChange={handleInfoChange} /><br />
-          {user && user.isHelper ?
-            <div>
-              <label htmlFor='name'>Skill</label><br />
-              <input type='text' name='skill' id='skill' value={basicInformation.skill} onChange={handleInfoChange} /><br />
-            </div> : null
-          }
         </form>
         <Button className={classes.button} onClick={() => handleSave('info')}>Save</Button>
       </div>

@@ -22,6 +22,20 @@ export default class Ajax{
 		}
 	}
 
+	static async getUserById(id){
+		try {
+			let token = localStorage.getItem('handy_helper_token');
+			let response = await axios.get(`${BASE_URL}/users/${id}`,
+				{headers: {
+					'Authorization': `Bearer ${token}`
+				}
+			});
+			return response.data;
+		} catch (e) {
+			console.error(e);
+		}
+	}
+
 	static async userLogin(payload){
 		try {
 			let response = await axios.post(`${BASE_URL}/users/login`, payload);

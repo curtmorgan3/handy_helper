@@ -32,7 +32,7 @@ const styles = {
     padding: '2%',
 
     '& h5': {
-      width: '20%'
+      width: '40%'
     }
   },
   avatar: {
