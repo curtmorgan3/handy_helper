@@ -22,7 +22,8 @@ const User = sequelize.define('user', {
 	skill: Sequelize.TEXT,
 	experience: Sequelize.TEXT,
 	averageRating: Sequelize.INTEGER,
-	location: Sequelize.STRING
+	location: Sequelize.STRING,
+	availability: Sequelize.STRING
 });
 
 const Booking = sequelize.define('booking', {

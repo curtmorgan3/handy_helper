@@ -63,7 +63,7 @@ userRouter.get('/:id', passport.authenticate('jwt', { session: false }), async (
 userRouter.put('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
 	try{
 		let { user } = req;
-		let { email, password, firstName, lastName, skill, experience, location, phone, isActive } = req.body;
+		let { email, password, firstName, lastName, skill, experience, location, phone, isActive, availability } = req.body;
 		user.update({
 			email,
 			password,
@@ -74,6 +74,7 @@ userRouter.put('/', passport.authenticate('jwt', { session: false }), async (req
 			location,
 			phone,
 			isActive,
+			availability
 		});
 		user.save();
 		res.json({user, msg: `User ${user.email} updated`});

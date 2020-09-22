@@ -6,7 +6,7 @@ import Ajax from '../../Ajax';
 
 import { makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { Typography, Avatar, Button, TextField } from '@material-ui/core';
+import { Typography, Avatar, Button, TextField, Checkbox } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import PersonIcon from '@material-ui/icons/Person';
 import SaveIcon from '@material-ui/icons/Save';
@@ -27,6 +27,21 @@ const styles = {
     marginTop: '5%',
     display: 'flex',
     alignItems: 'center',
+    backgroundColor: '#E9ECEF',
+    borderRadius: '15px',
+    padding: '2%',
+
+    '& h5': {
+      width: '40%'
+    }
+  },
+  availability: {
+    width: '100%',
+    height: '10%',
+    marginTop: '1%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: '#E9ECEF',
     borderRadius: '15px',
     padding: '2%',
@@ -100,15 +115,31 @@ let BuildProfile = (props) => {
     styles.header['& h5'].width = '100%';
     styles.button.width = '80%';
     styles.description.width = '100%';
+    styles.availability.flexDirection = 'column';
   }
 
   const [isEditing, setEditing] = React.useState(false);
   const [skillsEdit, setSkills] = React.useState('');
   const [experienceEdit, setExperience] = React.useState('');
+  const [availability, setAvailability] = React.useState({
+    Mon: false,
+    Tues: false,
+    Wed: false,
+    Thurs: false,
+    Fri: false,
+    Sat: false,
+    Sun: false
+  });
   const useStyles = makeStyles(styles);
   const classes = useStyles();
 
   const { currentUser: { user } } = props;
+
+  React.useEffect(() => {
+    if (user && user.availability) {
+      setAvailability(JSON.parse(user.availability));
+    }
+  }, []);
 
   if (!user) {
     return (
@@ -124,6 +155,12 @@ let BuildProfile = (props) => {
     }
   }
 
+  const handleAvailabilityChange = (day) => {
+    const update = {...availability};
+    update[day] = !update[day];
+    setAvailability(update);
+  }
+
   const handleEdit = () => {
     setSkills(user.skill);
     setExperience(user.experience);
@@ -135,6 +172,7 @@ let BuildProfile = (props) => {
     const updatedUser = {...user};
     updatedUser.skill = skillsEdit;
     updatedUser.experience = experienceEdit;
+    updatedUser.availability = JSON.stringify(availability);
 
     const res = await Ajax.updateUser(updatedUser);
     props.setCurrentUser(res.user);
@@ -155,6 +193,21 @@ let BuildProfile = (props) => {
         </div>
         <Button className={classes.button}>Hire this Helper</Button>
       </div>
+
+      <div className={classes.availability}>
+        <div style={{display: 'flex'}}>
+          {['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'].map(day => {
+            return (
+              <div key={day} style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                <Typography variant='body2'>{day}</Typography>
+                <Checkbox checked={availability[day]} onChange={() => handleAvailabilityChange(day)} />
+              </div>
+            )
+          })}
+        </div>
+        <Button className={classes.button} style={{height: '30px', margin: '1%'}} onClick={handleSave}>Save</Button>
+      </div>
+
       <div className={classes.body}>
         <div className={classes.description}>
           {isEditing 

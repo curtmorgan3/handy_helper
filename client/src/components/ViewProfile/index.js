@@ -33,6 +33,21 @@ const styles = {
       width: '40%'
     }
   },
+  availability: {
+    width: '100%',
+    height: '10%',
+    marginTop: '1%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#E9ECEF',
+    borderRadius: '15px',
+    padding: '2%',
+
+    '& h5': {
+      width: '40%'
+    }
+  },
   avatar: {
     height: '150px',
     width: '150px'
@@ -104,6 +119,21 @@ let ViewProfile = (props) => {
   const classes = useStyles();
   const [profile, setProfile] = React.useState(null);
   const [redirect, setRedirect] = React.useState(false);
+  const [availability, setAvailability] = React.useState({
+    Mon: false,
+    Tues: false,
+    Wed: false,
+    Thurs: false,
+    Fri: false,
+    Sat: false,
+    Sun: false
+  });
+  const { currentUser: { user } } = props;
+  React.useEffect(() => {
+    if (user && user.availability) {
+      setAvailability(JSON.parse(user.availability));
+    }
+  }, []);
 
   React.useEffect(() => {
     const fetchProfile = async () => {
@@ -156,6 +186,20 @@ let ViewProfile = (props) => {
         </div>
         <Button className={classes.button}>Hire this Helper</Button>
       </div>
+
+      <div className={classes.availability}>
+        <div style={{display: 'flex', width: '100%', justifyContent: 'space-around'}}>
+          {['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'].map(day => {
+            return (
+              <div key={day} style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                <Typography variant='body2'>{day}</Typography>
+                {availability[day] ? 'Yes' : 'No'}
+              </div>
+            )
+          })}
+        </div>
+      </div>
+
       <div className={classes.body}>
         <div className={classes.description}>
           <>
