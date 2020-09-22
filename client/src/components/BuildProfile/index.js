@@ -130,10 +130,11 @@ let BuildProfile = (props) => {
     Sat: false,
     Sun: false
   });
+  const { currentUser: { user } } = props;
+
+  const [userImage, setUserImage] = React.useState(user && user.image ? user.image : '');
   const useStyles = makeStyles(styles);
   const classes = useStyles();
-
-  const { currentUser: { user } } = props;
 
   React.useEffect(() => {
     if (user && user.availability) {
@@ -150,6 +151,8 @@ let BuildProfile = (props) => {
   const handleChange = (event) => {
     if (event.target.name === 'skills') {
       setSkills(event.target.value);
+    }else if (event.target.name === 'userImage') {
+      setUserImage(event.target.value);
     } else {
       setExperience(event.target.value);
     }
@@ -173,6 +176,7 @@ let BuildProfile = (props) => {
     updatedUser.skill = skillsEdit;
     updatedUser.experience = experienceEdit;
     updatedUser.availability = JSON.stringify(availability);
+    updatedUser.image = userImage;
 
     const res = await Ajax.updateUser(updatedUser);
     props.setCurrentUser(res.user);
@@ -187,6 +191,10 @@ let BuildProfile = (props) => {
 
           : <div style={{height: '150px', width: '150px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}><PersonIcon style={{fontSize: '8rem'}}/></div>
         }
+        <div style={{display: 'flex'}}>
+          <SaveIcon style={{marginLeft: '5%'}} onClick={handleSave} />
+          <TextField value={userImage} name='userImage' onChange={handleChange}/>
+        </div>
         <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', width: '60%', marginLeft: '2%'}}>
           <Typography style={{textAlign: 'center'}}variant='h5'>{user.firstName + ' ' + user.lastName}</Typography>
           <Typography style={{textAlign: 'center'}}variant='h5'>{user.location}</Typography>
