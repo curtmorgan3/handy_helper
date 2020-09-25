@@ -62,10 +62,12 @@ let ManageAccount = (props) => {
     news: true,
     deals: true,
   });
+
   const [password, setPassword] = React.useState({
     password: '',
     passwordConfirm: ''
   });
+
   const [basicInformation, setBasicInformation] = React.useState({
     firstName: user ? user.firstName : null,
     lastName: user ? user.lastName : null,
@@ -74,6 +76,13 @@ let ManageAccount = (props) => {
     email: user ? user.email : null,
     isActive: user ? user.isActive : null,
   });
+
+  React.useEffect(() => {
+    if (user && user.preferences) {
+      setNotifications(JSON.parse(user.preferences));
+    }
+  }, [])
+
   const useStyles = makeStyles(styles);
   const classes = useStyles();
 
@@ -102,6 +111,7 @@ let ManageAccount = (props) => {
   const handleSave = async (type) => {
     if (type === 'info') {
       const updatedUser = { ...user, ...basicInformation };
+      updatedUser.preferences = JSON.stringify(notificationSettings);
       const res = await Ajax.updateUser(updatedUser);
       if (res.Error) {
         console.error(res);
