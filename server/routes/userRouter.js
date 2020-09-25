@@ -115,6 +115,24 @@ userRouter.post('/login', async (req, res) => {
 	}
 });
 
+// Search Users by Skill
+userRouter.post('/search', async (req, res) => {
+	try{
+		/*
+			We need to do a DB lookup of all users whose skill includes a given string.
+			Try something like this --
+
+			const users = await User.findAll({
+				where: {
+					skill: sequelize.where(sequelize.fn('LOWER', sequelize.col('skill')), 'LIKE', '%' + query + '%')
+				}
+    	});
+		*/
+	}catch(e){
+		res.json({Error: `${e}`})
+	}
+});
+
 module.exports = {
 	userRouter
 }
