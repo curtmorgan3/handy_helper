@@ -12,6 +12,7 @@ import SignUp from './components/SignUp';
 import ManageAccount from './components/ManageAccount';
 import BuildProfile from './components/BuildProfile';
 import ViewProfile from './components/ViewProfile';
+import ResetPassword from './components/ResetPassword';
 
 function App({store}){
 
@@ -30,6 +31,8 @@ function App({store}){
               <Route exact path='/buildprofile' component={BuildProfile} />
               <Route exact path='/profile' component={ViewProfile} />
               <Route exact path='/profile/:id' component={ViewProfile} />
+
+              <Route exact path='/reset-password' component={ResetPassword} />
 
               <Route component={NotFound} />
             </Switch>

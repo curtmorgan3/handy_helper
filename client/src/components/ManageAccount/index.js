@@ -132,6 +132,17 @@ let ManageAccount = (props) => {
     }
   }
 
+  const passwordIsValid = () => {
+    const { password: pw, passwordConfirm: pc } = password;
+    return (
+      pw === pc &&
+      new RegExp(/!|@|#|\$|%|\^|&|\*|_/g).test(pw) &&
+      new RegExp(/[A-Z]/g).test(pw) &&
+      pw.length >=8 &&
+      pw.length < 26
+    )
+  }
+
   return (
     <div className={classes.profileContainer}>
       <h1>My Account</h1>
@@ -163,8 +174,11 @@ let ManageAccount = (props) => {
           <input type='password' name='passwordConfirm' id='passwordConfirm' value={password.passwordConfirm} onChange={handlePasswordChange} /><br />
         </form>
         {password.password === password.passwordConfirm ? null : <p className={classes.passwordAlert}>Passwords don't match</p>}
+        {new RegExp(/!|@|#|\$|%|\^|&|\*|_/g).test(password.password) ? null : <p className={classes.passwordAlert}>Password must include a special character</p>}
+        {new RegExp(/[A-Z]/g).test(password.password) ? null : <p className={classes.passwordAlert}>Password must include at least one uppercase character</p>}
+        {password.password.length >= 8 && password.password.length <= 25 ? null : <p className={classes.passwordAlert}>Password must be between 8 and 25 characters long</p>}
         {passwordUpdated ? <p className={classes.passwordSuccess}>Passwords was updated!</p> : null}
-        <Button className={classes.button} onClick={() => handleSave('password')}>Reset Password</Button>
+  <Button className={classes.button} onClick={passwordIsValid() ? () => handleSave('password') : null}>{passwordIsValid() ? 'Reset Password' : 'Please make corrections'}</Button>
         <h3>Transactions</h3>
         <div>
           <Button className={classes.button}>Booking History</Button>
