@@ -2,6 +2,7 @@ const userRouter = require('express').Router();
 const { User } = require('../models.js');
 const { compare } = require('../passwordEncrypt.js');
 const { sign, passport } = require('../jwtEncrypt.js');
+const {sequelize} =  require('../models.js')
 
 // Create User
 userRouter.post('/', async (req, res) => {
@@ -117,18 +118,29 @@ userRouter.post('/login', async (req, res) => {
 });
 
 // Search Users by Skill
-userRouter.post('/search', async (req, res) => {
+userRouter.post('/search:skill', async (req, res) => {
+
+	
 	try{
-		/*
-			We need to do a DB lookup of all users whose skill includes a given string.
-			Try something like this --
+		const skill = req.params.skill
+	
+			// We need to do a DB lookup of all users whose skill includes a given string.
+			// Try something like this --
 
 			const users = await User.findAll({
 				where: {
-					skill: sequelize.where(sequelize.fn('LOWER', sequelize.col('skill')), 'LIKE', '%' + query + '%')
+					skill: skill
+				
 				}
-    	});
-		*/
+
+
+
+				// users might be an array pass object 
+
+				
+		});
+	
+		res.json({users})
 	}catch(e){
 		res.json({Error: `${e}`})
 	}
