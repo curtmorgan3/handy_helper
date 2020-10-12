@@ -1,5 +1,5 @@
 const userRouter = require('express').Router();
-const { User } = require('../models.js');
+const { User, sequelize } = require('../models.js');
 const { compare } = require('../passwordEncrypt.js');
 const { sign, passport } = require('../jwtEncrypt.js');
 
@@ -37,6 +37,18 @@ userRouter.post('/', async (req, res) => {
 		res.json({Error: `${e}`});
 	}
 });
+
+// Get All Helpers
+userRouter.get('/all-helpers', passport.authenticate('jwt', { session: false }), async (req, res)=>{
+	try{
+		const allHelpers = await User.findAll({ where: { isHelper: true }});
+		
+		res.json({ allHelpers });
+	}catch(e){
+		res.json({Error: `${e}`})
+	}
+});
+
 
 // Get Current User 
 userRouter.get('/', passport.authenticate('jwt', { session: false }), async (req, res)=>{
@@ -119,16 +131,15 @@ userRouter.post('/login', async (req, res) => {
 // Search Users by Skill
 userRouter.post('/search', async (req, res) => {
 	try{
-		/*
-			We need to do a DB lookup of all users whose skill includes a given string.
-			Try something like this --
-
+			const { skill } = req.body;
 			const users = await User.findAll({
 				where: {
-					skill: sequelize.where(sequelize.fn('LOWER', sequelize.col('skill')), 'LIKE', '%' + query + '%')
+					skill: sequelize.where(sequelize.fn('LOWER', sequelize.col('skill')), 'LIKE', '%' + skill + '%'),
+					isHelper: true
 				}
-    	});
-		*/
+			});
+			
+			res.json({ users });
 	}catch(e){
 		res.json({Error: `${e}`})
 	}

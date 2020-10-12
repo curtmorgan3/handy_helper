@@ -25,7 +25,8 @@ const User = sequelize.define('user', {
 	location: Sequelize.STRING,
 	availability: Sequelize.STRING,
 	image: Sequelize.STRING,
-	preferences: Sequelize.STRING
+	preferences: Sequelize.STRING,
+	fee: Sequelize.FLOAT,
 });
 
 const Booking = sequelize.define('booking', {
@@ -43,11 +44,19 @@ const Listing = sequelize.define('listing', {
 	location: Sequelize.STRING,
 });
 
+User.beforeBulkCreate(async (users, options) => {
+	for (let i = 0; i < users.length; i++) {
+		const user = users[i];
+		const passwordDigest = await createHash(user.password);
+		user.password = passwordDigest;
+	}
+});
 
 User.beforeCreate(async (user, options) => {
 	const passwordDigest = await createHash(user.password);
 	user.password = passwordDigest;
 });
+
 User.beforeUpdate(async (user, options) => {
 	if (options.fields.includes('password')) {
 		const passwordDigest = await createHash(user.password);

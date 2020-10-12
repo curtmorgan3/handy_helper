@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setCurrentUser } from '../../redux/actions.js';
 import { Jumbotron, Button, Form, Card } from 'react-bootstrap';
@@ -36,8 +37,9 @@ export default class Index extends React.Component {
             Find handy freelancers to help you fix life's unfixable problems.
           </p>        
           <Form className='index-search'>
-            <Form.Control type='text' placeholder='try carpenter, plumber or electrician'></Form.Control>
-            <Button variant="primary">Search</Button>
+            <Link to='/helpers'>
+              <Button variant="primary">Find a Helper</Button>
+            </Link>
           </Form>
         </Jumbotron>
         <div className='index-tagline'>

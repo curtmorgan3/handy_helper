@@ -87,4 +87,34 @@ export default class Ajax{
 		}
 	}
 
+	static async searchHelpersBySkill(skill){
+		try {
+			let token = localStorage.getItem('handy_helper_token');
+			let response = await axios.post(`${BASE_URL}/users/search`, { skill }, 
+				{ headers: {
+					'Authorization': `Bearer ${token}`
+				}
+			});
+			
+			return(response.data);
+		} catch (e) {
+			console.error(e);
+		}
+	}
+
+	static async fetchAllHelpers(){
+		try {
+			let token = localStorage.getItem('handy_helper_token');
+			let response = await axios(`${BASE_URL}/users/all-helpers`, 
+				{ headers: {
+					'Authorization': `Bearer ${token}`
+				}
+			});
+			
+			return(response.data);
+		} catch (e) {
+			console.error(e);
+		}
+	}
+
 }
