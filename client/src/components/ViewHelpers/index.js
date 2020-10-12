@@ -89,7 +89,7 @@ const ViewHelpers = () => {
 
   // Filter by Availability
   React.useEffect(() => {
-    const filtered = display.filter(helper => {
+    const filtered = allHelpers.filter(helper => {
       const availability = JSON.parse(helper.availability);
       const selectedDays = Object.keys(filterAvailability).filter(day => filterAvailability[day]);
       
@@ -108,7 +108,7 @@ const ViewHelpers = () => {
 
   // Filter by Fee
   React.useEffect(() => {
-    const filtered = display.filter(helper => {
+    const filtered = allHelpers.filter(helper => {
       return helper.fee <= filterFee;
     });
 
