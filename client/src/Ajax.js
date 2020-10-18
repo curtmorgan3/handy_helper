@@ -133,4 +133,20 @@ export default class Ajax{
 		}
 	}
 
+	static async getAllListings(){
+		try {
+			let token = localStorage.getItem('handy_helper_token');
+			let response = await axios(`${BASE_URL}/listings`, 
+				{ headers: {
+					'Authorization': `Bearer ${token}`
+				}
+			});
+			
+			return(response.data);
+		} catch (e) {
+			return null;
+			console.error(e);
+		}
+	}
+
 }
