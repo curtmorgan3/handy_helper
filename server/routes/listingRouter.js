@@ -1,5 +1,5 @@
 const listingRouter = require('express').Router();
-const { Listing } = require('../models.js');
+const { Listing, User } = require('../models.js');
 const { passport } = require('../jwtEncrypt.js');
 
 // Create listing
@@ -9,16 +9,21 @@ listingRouter.post('/', passport.authenticate('jwt', { session: false }), async 
 			skill,
 			serviceDetails,
 			suggestedPrice,
-			location
+			location,
+			title,
+			userId
 		} = req.body;
 		const listing = await Listing.create({
 			skill,
 			isActive: true,
 			serviceDetails,
 			suggestedPrice,
-			location
-		})
-		res.json({ msg: `Listing ${listing.skill} created.` })
+			location,
+			title
+		});
+		const user = await User.findByPk(userId);
+		user.addListing(listing);
+		res.json(listing)
 	} catch (e) {
 		res.json({ Error: `${e}` });
 	}

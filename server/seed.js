@@ -100,13 +100,16 @@ async function createFakeHelpers(){
 
 async function createListing(){
 	await Listing.destroy({where: {} });
-	await Listing.create({
+	const listing = await Listing.create({
 		skill: 'plumber',
 		isActive: true,
 		serviceDetails: 'bathroom sink is clogged',
 		suggestedPrice: 80.00,
-		location: 'Brooklyn, NY',
-	})
+		location: 'Seattle, WA',
+		title: 'I need a plumber!'
+	});
+	const user = await User.findByPk(1);
+	user.addListing(listing);
 };
 
 async function createBooking(){

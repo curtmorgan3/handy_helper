@@ -37,14 +37,7 @@ export default function NavBar(props) {
                             <Link to='/' className='nav-link'></Link>
                         </NavDropdown.Item>
                     </NavDropdown>
-                    <NavDropdown className='nav-link' title="Listings" id="basic-nav-dropdown">
-                        <NavDropdown.Item> View Listings
-                            <Link to='/' className='nav-link'></Link>
-                        </NavDropdown.Item>
-                        <NavDropdown.Item>Post Listing
-                            <Link to='/' className='nav-link'></Link>
-                        </NavDropdown.Item>
-                    </NavDropdown>
+                    <Link to='/listings/new' className='nav-link'>Post Listing</Link>
                     <Link className='nav-link' to='/'>Contact</Link>
                 </Nav>
                 <Nav>

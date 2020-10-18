@@ -42,7 +42,11 @@ const Listing = sequelize.define('listing', {
 	serviceDetails: Sequelize.STRING,
 	suggestedPrice: Sequelize.FLOAT,
 	location: Sequelize.STRING,
+	title: Sequelize.STRING
 });
+
+User.hasMany(Listing);
+Listing.belongsTo(User);
 
 User.beforeBulkCreate(async (users, options) => {
 	for (let i = 0; i < users.length; i++) {

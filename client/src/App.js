@@ -13,6 +13,8 @@ import ManageAccount from './components/ManageAccount';
 import BuildProfile from './components/BuildProfile';
 import ViewProfile from './components/ViewProfile';
 import ViewHelpers from './components/ViewHelpers';
+import CreateListing from './components/CreateListing';
+import Listings from './components/Listings';
 
 function App({store}){
 
@@ -32,6 +34,8 @@ function App({store}){
               <Route exact path='/profile' component={ViewProfile} />
               <Route exact path='/profile/:id' component={ViewProfile} />
               <Route exact path='/helpers' component={ViewHelpers} />
+              <Route exact path='/listings' component={Listings} />
+              <Route exact path='/listings/new' component={CreateListing} />
 
               <Route component={NotFound} />
             </Switch>
