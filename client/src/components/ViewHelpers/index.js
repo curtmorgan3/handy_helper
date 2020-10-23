@@ -57,6 +57,7 @@ const ViewHelpers = () => {
   });
   const [filterSkill, setSkill] = React.useState('');
   const [filterFee, setFee] = React.useState(0);
+  const [error, setError] = React.useState(null);
 
   React.useEffect(() => {
     const fetchAllHelpers = async () => {
@@ -77,11 +78,36 @@ const ViewHelpers = () => {
   // Filter by Skill
   React.useEffect(() => {
     const filterHelpersBySkill = async () => {
-      const data= await Ajax.searchHelpersBySkill(filterSkill);
-      const helpers = data.users;
+      if (filterSkill.includes(',')) {
+        const skills = filterSkill.split(',').filter(word => word).map(word => word.trim());
+        const data = await Ajax.fetchAllHelpers();
+        let helpers = data.allHelpers;
 
-      setDisplay(helpers);
+        helpers = helpers.filter(helper => {
+          let hasAllSkills = true;
+          skills.forEach(skill => {
+            if (!helper.skill.includes(skill)) {
+              hasAllSkills = false;
+            }
+          })
+          return hasAllSkills;
+        });
+
+        const helperSet = new Set();
+        helpers.forEach(helper => helperSet.add(helper));
+
+        setDisplay([...helperSet]);
+      } else {
+        const data = await Ajax.searchHelpersBySkill(filterSkill);
+        const helpers = data.users;
+        setDisplay(helpers);
+      }
     }
+
+    if (!filterSkill) setError(null);
+    if (new RegExp(/[\d]+/g).test(filterSkill)) setError('No numbers are allowed.');
+    if (new RegExp(/!|\?|\*|&|%|\$|#|@/).test(filterSkill)) setError('No special characters are allowed.');
+
 
     filterHelpersBySkill();
 
@@ -151,6 +177,8 @@ const ViewHelpers = () => {
         name='skill'
         onChange={handleChange}
       />
+
+      <Typography variant='body1' style={{color: 'red'}}>{error ? error : ''}</Typography>
 
       <Typography variant='h6'>Filter by Availability</Typography>
 
