@@ -29,17 +29,10 @@ export default function NavBar(props) {
                 <Nav className="mr-auto">
                     <Link to='/' className='nav-link'>Home</Link>
                     <Link to='/' className='nav-link'>About</Link>
-                    <NavDropdown className='nav-link' title="Services" id="basic-nav-dropdown">
-                        <NavDropdown.Item>View Services
-                            <Link to='/' className='nav-link'></Link>
-                        </NavDropdown.Item>
-                        <NavDropdown.Item>Post Service
-                            <Link to='/' className='nav-link'></Link>
-                        </NavDropdown.Item>
-                    </NavDropdown>
                     <Link to='/listings' className='nav-link'>View Listings</Link>
                     <Link to='/listings/new' className='nav-link'>Post Listing</Link>
-                    <Link className='nav-link' to='/'>Contact</Link>
+                    <Link to='/bookings' className='nav-link'>My Bookings</Link>
+                    <Link className='nav-link' to='/contact'>Contact</Link>
                 </Nav>
                 <Nav>
                     <Link to='/profile' className='nav-link'><FontAwesomeIcon icon={faUser}/>Profile</Link>
@@ -60,23 +53,7 @@ export default function NavBar(props) {
                     <Nav className="mr-auto">
                         <Link to='/' className='nav-link'>Home</Link>
                         <Link to='/' className='nav-link'>About</Link>
-                        <NavDropdown className='nav-link' title="Services" id="basic-nav-dropdown">
-                            <NavDropdown.Item>View Services
-                                <Link to='/' className='nav-link'></Link>
-                            </NavDropdown.Item>
-                            <NavDropdown.Item>Post Service
-                                <Link to='/' className='nav-link'></Link>
-                            </NavDropdown.Item>
-                        </NavDropdown>
-                        <NavDropdown className='nav-link' title="Listings" id="basic-nav-dropdown">
-                            <NavDropdown.Item> View Listings
-                                <Link to='/' className='nav-link'></Link>
-                            </NavDropdown.Item>
-                            <NavDropdown.Item>Post Listing
-                                <Link to='/' className='nav-link'></Link>
-                            </NavDropdown.Item>
-                        </NavDropdown>
-                        <Link className='nav-link' to='/'>Contact</Link>
+                        <Link className='nav-link' to='/contact'>Contact</Link>
                     </Nav>
                     <Nav>
                         <Link className='nav-link' to="/signup">Log In</Link>

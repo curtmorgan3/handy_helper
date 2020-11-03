@@ -34,6 +34,7 @@ const Booking = sequelize.define('booking', {
 	serviceDetails: Sequelize.STRING,
 	price: Sequelize.FLOAT,
 	location: Sequelize.STRING,
+	title: Sequelize.STRING,
 });
 
 const Listing = sequelize.define('listing', {
@@ -47,6 +48,9 @@ const Listing = sequelize.define('listing', {
 
 User.hasMany(Listing);
 Listing.belongsTo(User);
+
+User.belongsToMany(Booking, { through: 'user_bookings' });
+Booking.belongsToMany(User, { through: 'user_bookings' });
 
 User.beforeBulkCreate(async (users, options) => {
 	for (let i = 0; i < users.length; i++) {

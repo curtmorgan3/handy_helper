@@ -42,7 +42,7 @@ async function createFakeHelpers(){
 			phone: '999-999-9999',
 			isActive: true,
 			isHelper: true,
-			skill: 'plumber, Carpenter',
+			skill: 'plumber, carpenter',
 			averageRating: 0,
 			fee: 99.5,
 			location: 'Seattle, WA',
@@ -94,6 +94,21 @@ async function createFakeHelpers(){
 			availability: '{"Mon":true,"Tues":true,"Wed":true,"Thurs":false,"Fri":false,"Sat":false,"Sun":false}',
 			image: 'https://www.trade-schools.net/graphics/become-an-electrician-1-fb.png'
 		},
+		{
+			email: 'helper6@gmail.com',
+			password: 'password',
+			firstName: 'Giddeon',
+			lastName: 'Helper',
+			phone: '999-999-9999',
+			isActive: true,
+			isHelper: true,
+			skill: 'plumber',
+			averageRating: 0,
+			fee: 30.5,
+			location: 'New York, NY',
+			availability: '{"Mon":true,"Tues":true,"Wed":true,"Thurs":false,"Fri":false,"Sat":false,"Sun":false}',
+			image: 'https://www.trade-schools.net/graphics/become-an-electrician-1-fb.png'
+		},
 	]);
 };
 
@@ -114,12 +129,17 @@ async function createListing(){
 
 async function createBooking(){
 	await Booking.destroy({where: {} });
-	await Booking.create({
+	const book = await Booking.create({
 		skill: 'dishwasher repair',
 		serviceDetails: 'water is not running, bad smell is coming from dishwasher',
 		price: 170.00,
-		location: 'Queens, NY'
-	})
+		location: 'Seattle, WA'
+	});
+	const userOne = await User.findByPk(1);
+	const helper = await User.findByPk(2);
+
+	userOne.addBooking(book);
+	helper.addBooking(book);
 };
 
 

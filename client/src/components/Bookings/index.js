@@ -1,6 +1,7 @@
 import React from 'react';
+import { format } from 'date-fns';
 import { useSelector, useDispatch } from 'react-redux';
-import { setAllListings, setNewBooking } from '../../redux/actions';
+import { setAllBookings, setNewBooking } from '../../redux/actions';
 import { Redirect } from 'react-router-dom';
 import Ajax from '../../Ajax';
 
@@ -38,7 +39,7 @@ const styles = {
   filters: {
     display: 'flex',
     flexDirection: 'column',
-    height: '200px',
+    height: '100px',
     width: '50%',
     margin: 'auto',
     marginBottom: '5%',
@@ -48,22 +49,21 @@ const styles = {
   }
 }
 
-const Listings = (props) => {
+const Bookings = (props) => {
   const useStyles = makeStyles(styles);
   const classes = useStyles();
 
   // Redux
   const dispatch = useDispatch();
-  const allListings = useSelector(state => state.listings.allListings);
+  const allBookings = useSelector(state => state.bookings.allBookings);
   const currentUser = useSelector(state => state.user.currentUser.user);
   /////////
 
   const [redirect, setRedirect] = React.useState(null);
   const [display, filterDisplay] = React.useState([]);
+  const [error, setError] = React.useState(null);
   const [filters, setFilters] = React.useState({
-    skill: '',
-    location: '',
-    fee: ''
+    year: '',
   })
 
   React.useEffect(() => {
@@ -73,27 +73,41 @@ const Listings = (props) => {
   }, [currentUser]);
 
   React.useEffect(() => {
-    const fetchListings = async () => {
-      const listings = await Ajax.getAllListings();
-      dispatch(setAllListings(listings.listings));
+    const fetchBookings = async () => {
+      const bookings = await Ajax.getMyBookings();
+      dispatch(setAllBookings(bookings));
     }
 
-    if (!allListings.length) {
-      fetchListings();
+    if (!allBookings || !allBookings.length) {
+      fetchBookings();
     }
   }, []);
 
   React.useEffect(() => {
-    if (!display.length) {
-      if (!filters.skill && !filters.location && !filters.fee) {
-        filterDisplay(allListings);
-      }
+    if (!display.length && !filters.year) {
+      filterDisplay(allBookings);
     }
-  }, [allListings, display, filters])
+  }, [allBookings, display, filters])
+
+
+  const handleClick = async (id) => {
+    await Ajax.deleteBooking(id);
+    const filtered = display.filter(book => book.id !== id);
+    filterDisplay(filtered);
+    dispatch(setAllBookings(filtered));
+  }
 
   const handleChange = (e) => {
+    const targ = e.target.value;
+    if (!targ) setError(null);
+
+    if (new RegExp(/[A-Za-z]+/g).test(targ)) setError('Please remove any words from the year field.');
+    if (new RegExp(/!|\?|\*|&|%|\$|#|@/).test(targ)) setError('Please remove any special characters from the year field.');
+    if (parseInt(targ) > 2020) setError("You can't select a year that is in the future.");
+    if (targ.length >= 4 && parseInt(targ) < 2000) setError('Your selected year cannot be before 2000.');
+
     const update = { ...filters };
-    update[e.target.name] = e.target.value;
+    update[e.target.name] = targ;
     setFilters(update);
     applyFilters(update);
   }
@@ -101,35 +115,14 @@ const Listings = (props) => {
   const applyFilters = (update) => {
     let filtered = display;
 
-    if (update.skill) {
-      filtered = filtered.filter(listing => {
-        return listing.skill.toLowerCase().includes(update.skill.toLowerCase());
-      });
-    }
-
-    if (update.location) {
-      filtered = filtered.filter(listing => {
-        return listing.location.toLowerCase().includes(update.location.toLowerCase());
-      });
-    }
-
-    if (update.fee) {
-      filtered = filtered.filter(listing => {
-        const price = parseFloat(update.fee);
-        return listing.suggestedPrice <= price;
+    if (update.year) {
+      filtered = filtered.filter(booking => {
+        return booking.createdAt.includes(update.year);
       });
     }
 
     filterDisplay(filtered);
   }
-
-  const handleClick = (id) => {
-    const listing = allListings.find(list => list.id === id);
-
-    dispatch(setNewBooking(listing));
-    setRedirect('/bookings/new');
-  }
-
 
   if (redirect) {
     return (
@@ -139,37 +132,24 @@ const Listings = (props) => {
 
   return (
     <div className={classes.container}>
-      <Typography variant='h4'>Listings</Typography>
+      <Typography variant='h4'>My Bookings</Typography>
+
+      <div className={classes.listings}>
 
       <div className={classes.filters}>
 
         <TextField 
           variant='filled'
-          label='Filter by Skill'
-          name='skill'
-          value={filters.skill}
+          label='Filter by Year'
+          name='year'
+          value={filters.year}
           onChange={handleChange}
         />
 
-        <TextField 
-          variant='filled'
-          label='Filter by Location'
-          name='location'
-          value={filters.location}
-          onChange={handleChange}
-        />
+        {error ? <Typography style={{color: 'red'}}>{error}</Typography> : null}
 
-        <TextField 
-          variant='filled'
-          name='fee'
-          label='Filter by Fee'
-          value={filters.fee}
-          onChange={handleChange}
-        />
 
-      </div>
-
-      <div className={classes.listings}>
+        </div>
 
         {!display.length ? null : 
           display.map(listing => (
@@ -178,12 +158,13 @@ const Listings = (props) => {
 
               <div style={{display: 'flex', justifyContent: 'space-between'}}>
                 <Typography variant='body1'>Location: {listing.location}</Typography>
-                <Typography variant='body1'>Hourly Price: {listing.suggestedPrice}</Typography>
+                <Typography variant='body1'>Date: {format(new Date(listing.createdAt), 'MM/dd/yyyy')}</Typography>
+                <Typography variant='body1'>Hourly Price: {listing.price}</Typography>
                 <Typography variant='body1'>Skill: {listing.skill}</Typography>
               </div>
 
               <Typography style={{marginTop: '2%'}} variant='body1'>{listing.serviceDetails}</Typography>
-              <Button onClick={() => handleClick(listing.id)}>Take this Job!</Button>
+              <Button onClick={() => handleClick(listing.id)}>Cancel this booking</Button>
             </div>
           ))
         }
@@ -195,4 +176,4 @@ const Listings = (props) => {
   )
 }
 
-export default Listings;
+export default Bookings;

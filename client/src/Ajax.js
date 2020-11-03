@@ -117,6 +117,7 @@ export default class Ajax{
 		}
 	}
 
+	// Listings
 	static async createListing(body){
 		try {
 			let token = localStorage.getItem('handy_helper_token');
@@ -128,8 +129,8 @@ export default class Ajax{
 			
 			return(response.data);
 		} catch (e) {
-			return null;
 			console.error(e);
+			return null;
 		}
 	}
 
@@ -146,6 +147,55 @@ export default class Ajax{
 		} catch (e) {
 			return null;
 			console.error(e);
+		}
+	}
+
+	// Bookings
+	static async createBooking(body){
+		try {
+			let token = localStorage.getItem('handy_helper_token');
+			let response = await axios.post(`${BASE_URL}/bookings`, body, 
+				{ headers: {
+					'Authorization': `Bearer ${token}`
+				}
+			});
+			
+			return(response.data);
+		} catch (e) {
+			console.error(e);
+			return null;
+		}
+	}
+
+	static async getMyBookings(){
+		try {
+			let token = localStorage.getItem('handy_helper_token');
+			let response = await axios.get(`${BASE_URL}/bookings/my-bookings`, 
+				{ headers: {
+					'Authorization': `Bearer ${token}`
+				}
+			});
+			
+			return(response.data);
+		} catch (e) {
+			console.error(e);
+			return null;
+		}
+	}
+
+	static async deleteBooking(id){
+		try {
+			let token = localStorage.getItem('handy_helper_token');
+			let response = await axios.delete(`${BASE_URL}/bookings/${id}`, 
+				{ headers: {
+					'Authorization': `Bearer ${token}`
+				}
+			});
+			
+			return(response.data);
+		} catch (e) {
+			console.error(e);
+			return null;
 		}
 	}
 

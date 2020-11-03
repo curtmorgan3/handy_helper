@@ -14,7 +14,10 @@ import BuildProfile from './components/BuildProfile';
 import ViewProfile from './components/ViewProfile';
 import ViewHelpers from './components/ViewHelpers';
 import CreateListing from './components/CreateListing';
+import CreateBooking from './components/CreateBooking';
 import Listings from './components/Listings';
+import Bookings from './components/Bookings';
+import Contact from './components/Contact';
 
 function App({store}){
 
@@ -36,6 +39,9 @@ function App({store}){
               <Route exact path='/helpers' component={ViewHelpers} />
               <Route exact path='/listings' component={Listings} />
               <Route exact path='/listings/new' component={CreateListing} />
+              <Route exact path='/bookings' component={Bookings} />
+              <Route exact path='/bookings/new' component={CreateBooking} />
+              <Route exact path='/contact' component={Contact} />
 
               <Route component={NotFound} />
             </Switch>

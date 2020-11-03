@@ -1,5 +1,5 @@
 import update from 'immutability-helper';
-import { SET_CURRENT_USER, SIGN_USER_OUT, SET_ALL_LISTINGS } from './actions.js';
+import { SET_CURRENT_USER, SIGN_USER_OUT, SET_ALL_LISTINGS, SET_NEW_BOOKING, SET_ALL_BOOKINGS } from './actions.js';
 import { combineReducers } from 'redux';
 
 const initialUserState = {
@@ -10,6 +10,11 @@ const initialUserState = {
 
 const initialListingState = {
   allListings: []
+}
+
+const initialBookingState = {
+  newBooking: {},
+  allBookings: []
 }
 
 const userReducer = (state = initialUserState, action) => {
@@ -42,9 +47,25 @@ const listingReducer = (state = initialListingState, action) => {
   };
 };
 
+const bookingReducer = (state = initialBookingState, action) => {
+  switch(action.type) {
+    case SET_NEW_BOOKING:
+      return update(state, {
+        newBooking: {$set: action.payload}
+      });
+    case SET_ALL_BOOKINGS:
+      return update(state, {
+        allBookings: {$set: action.payload}
+      });
+    default:
+      return state;
+  };
+};
+
 const allReducers = combineReducers({
   user: userReducer,
-  listings: listingReducer
+  listings: listingReducer,
+  bookings: bookingReducer,
 });
 
 export default allReducers;

@@ -58,6 +58,7 @@ const ViewHelpers = () => {
   const [filterSkill, setSkill] = React.useState('');
   const [filterFee, setFee] = React.useState(0);
   const [error, setError] = React.useState(null);
+  const [filterLocation, setLocation] = React.useState('');
 
   React.useEffect(() => {
     const fetchAllHelpers = async () => {
@@ -108,7 +109,6 @@ const ViewHelpers = () => {
     if (new RegExp(/[\d]+/g).test(filterSkill)) setError('No numbers are allowed.');
     if (new RegExp(/!|\?|\*|&|%|\$|#|@/).test(filterSkill)) setError('No special characters are allowed.');
 
-
     filterHelpersBySkill();
 
   }, [filterSkill]);
@@ -146,6 +146,24 @@ const ViewHelpers = () => {
 
   }, [filterFee])
 
+  // Filter by Location
+  React.useEffect(() => {
+    const filtered = allHelpers.filter(helper => {
+      return helper.location.toLowerCase().includes(filterLocation.toLowerCase());
+    });
+
+    if (new RegExp(/[\d]+/g).test(filterLocation)) setError('Please remove any numbers from the location field.');
+    if (new RegExp(/!|\?|\*|&|%|\$|#|@/).test(filterLocation)) setError('Please remove any special characters from the location field.');
+
+    if (!filterLocation) {
+      setDisplay(allHelpers);
+      setError(null);
+    } else {
+      setDisplay(filtered);
+    }
+
+  }, [filterLocation])
+
   const handleSetAvailability = (day) => {
     const update = {...filterAvailability};
     update[day] = !update[day];
@@ -162,6 +180,10 @@ const ViewHelpers = () => {
         setFee(parseFloat(e.target.value));
       break;
 
+      case 'location':
+        setLocation(e.target.value);
+      break;
+
       default:
         return;
     }
@@ -175,6 +197,14 @@ const ViewHelpers = () => {
         placeholder='Search by Skill'
         value={filterSkill}
         name='skill'
+        onChange={handleChange}
+      />
+
+      <TextField 
+        style={{width: '50%', marginBottom: '2%'}}
+        placeholder='Search by Location'
+        value={filterLocation}
+        name='location'
         onChange={handleChange}
       />
 
