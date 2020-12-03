@@ -184,9 +184,14 @@ let ViewProfile = (props) => {
           <Typography style={{textAlign: 'center'}}variant='h5'>{profile.firstName + ' ' + profile.lastName}</Typography>
           <Typography style={{textAlign: 'center'}}variant='h5'>{profile.location}</Typography>
         </div>
-        <Button className={classes.button}>Hire this Helper</Button>
+        {props.currentUser.user.isHelper 
+          ? <Button className={classes.button}>Hire this Helper</Button>
+          : null
+        }
       </div>
 
+      {props.currentUser.user.isHelper 
+          ?
       <div className={classes.availability}>
         <div style={{display: 'flex', width: '100%', justifyContent: 'space-around'}}>
           {['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'].map(day => {
@@ -199,26 +204,31 @@ let ViewProfile = (props) => {
           })}
         </div>
       </div>
+      : null}
 
-      <div className={classes.body}>
-        <div className={classes.description}>
-          <>
-            <div className={classes.edit}>
-              <Typography style={{textAlign: 'center'}} variant='h5'>Skills & Expertise</Typography>
+      {props.currentUser.user.isHelper 
+          ?
+          <div className={classes.body}>
+            <div className={classes.description}>
+              <>
+                <div className={classes.edit}>
+                  <Typography style={{textAlign: 'center'}} variant='h5'>Skills & Expertise</Typography>
+                </div>
+                <Typography variant='body1'>{profile.skill}</Typography>
+              </>
+              
             </div>
-            <Typography variant='body1'>{profile.skill}</Typography>
-          </>
-          
-        </div>
-        <div className={classes.description}>
-          <>
-            <div className={classes.edit}>
-              <Typography style={{textAlign: 'center'}} variant='h5'>Experience</Typography>
+            <div className={classes.description}>
+              <>
+                <div className={classes.edit}>
+                  <Typography style={{textAlign: 'center'}} variant='h5'>Experience</Typography>
+                </div>
+                <Typography variant='body1'>{profile.experience}</Typography>
+              </>
             </div>
-            <Typography variant='body1'>{profile.experience}</Typography>
-          </>
-        </div>
-      </div>
+          </div>
+          : null
+        }
     </div>
   )
 }

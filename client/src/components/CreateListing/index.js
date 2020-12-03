@@ -40,8 +40,14 @@ const CreateListing = (props) => {
 
   const handleChange = (e) => {
     const update = {...form};
-    update[e.target.name] = e.target.value;
-    updateForm(update);
+
+    const isInvalidPrice = new RegExp(/!|@|-|#|\$|%|\^|&|\*|[A-Za-z]/).test(e.target.value);
+
+    if (e.target.name !== 'price' || !isInvalidPrice) {
+      update[e.target.name] = e.target.value;
+      updateForm(update);
+    }
+
   }
 
   React.useEffect(() => {
