@@ -4,10 +4,8 @@
 
 All cards in 'To-Do' need to be claimed. If you're comfortable with a described task, feel free to create an issue (right click a task and click "convert to issue"), set yourself as an assignee on the card and move it into 'In Progress'. Each card should have its own feature branch. 
 
-## Requirements
+## Requirements to Run Handy Helper Locally
 Ensure you have the latest version of Node on your local machine. I recommend using Node Version Manager to install and manage multiple Node versions: [NVM](https://github.com/nvm-sh/nvm/blob/master/README.md)
-
-Also, you'll need [Node Package Manager](https://www.npmjs.com/get-npm)
 
 To run the server locally, from the `server` directory, run `npm start`. A server should start on `127.0.0.1:3001`.
 
